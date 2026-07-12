@@ -11,6 +11,6 @@
       fzf
 	  ];
 
-  	xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/modules/home-manager/nvim/nvim";
+  	xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/ndots/modules/home-manager/nvim/nvim";
   };
 }

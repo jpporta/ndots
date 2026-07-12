@@ -44,11 +44,11 @@
         enc = "openssl enc -aes-256-cbc -md sha512 -pbkdf2 -iter 1000000 -salt";
         backup = "packup && rm ~/Documents/packup* && mv ~/packup* ~/Documents/ && rsync --archive --update --copy-links ~/Documents 192.168.3.200:/home/jpporta/ --info=progress2";
         gn = "git commit -m \"$(date)\"";
-        nixs = "cd ~/nixos-config && git add . && sudo nixos-rebuild switch --flake ~/nixos-config#jpporta-nixos";
+        nixs = "cd ~/ndots && git add . && sudo nixos-rebuild switch --flake ~/ndots#jpporta-nixos";
         nix-search = "nix --extra-experimental-features \"nix-command flakes\" search nixpkgs";
         nix-garbage = "sudo nix-collect-garbage -d && sudo nixos-rebuild switch";
         nix-update = "sudo nix-channel --update && sudo nixos-rebuild switch";
-        hms = "cd ~/nixos-config && git add . && home-manager switch --flake . ";
+        hms = "cd ~/ndots && git add . && home-manager switch --flake .#jpporta-deck";
         s = "sesh connect $(sesh list | fzf)";
       };
 

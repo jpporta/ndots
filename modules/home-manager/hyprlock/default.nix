@@ -36,7 +36,7 @@ in
           monitor = "${monitor}";
           color = "${bg}";
           # Prefer a wallpaper? drop `color` above and use:
-          # path        = ~/nixos-config/wallpapers/lock.png
+          # path        = ~/ndots/wallpapers/lock.png
           # blur_passes = 3
           # blur_size   = 6
         };

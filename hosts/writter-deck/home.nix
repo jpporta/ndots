@@ -12,21 +12,10 @@ in
 {
   imports = [
     # Shared home-manager modules
-    ../../modules/home-manager/arch-packages
     ../../modules/home-manager/oh-my-posh
     ../../modules/home-manager/zshrc
-    ../../modules/home-manager/alacritty
     ../../modules/home-manager/bat
-    ../../modules/home-manager/fastfetch
-    ../../modules/home-manager/hyprland
-    ../../modules/home-manager/hyprlock
-    ../../modules/home-manager/hyprpaper
-    ../../modules/home-manager/awww
-    ../../modules/home-manager/hyprsunset
-    ../../modules/home-manager/darkman
-    ../../modules/home-manager/wlogout
     ../../modules/home-manager/opencode
-    ../../modules/home-manager/swaync
     ../../modules/home-manager/nvim
     ../../modules/home-manager/pi
     ../../modules/home-manager/tmux
@@ -41,6 +30,8 @@ in
     };
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   custom = {
     zsh = {
       enable = true;
@@ -50,19 +41,6 @@ in
     oh-my-posh.enable = true;
     pi.enable = true;
     nvim.enable = true;
-
-    hyprland.enable = true;
-    hyprlock.enable = true;
-    hyprpaper.enable = false;
-    hyprsunset.enable = true;
-    wlogout.enable = true;
-    darkman.enable = true;
-    awww.enable = true;
-    opencode.enable = true;
-    alacritty.enable = true;
-    bat.enable = true;
-    fastfetch.enable = true;
-    swaync.enable = true;
   };
 
   home.packages = with pkgs; [
