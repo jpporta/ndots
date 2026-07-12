@@ -5,7 +5,7 @@
   ...
 }:
 let
-  dotfiles = "${config.home.homeDirectory}/nixos-config/modules/home-manager/hyprland/hypr";
+  dotfiles = "${config.home.homeDirectory}/ndots/modules/home-manager/hyprland/hypr";
 in
 {
   options.custom.hyprland.enable = lib.mkEnableOption "Hyprland user config";
