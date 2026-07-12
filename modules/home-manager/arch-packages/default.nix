@@ -25,12 +25,6 @@ in
     which
     entr
     stow
-    bat-extras.batman
-    bat-extras.batgrep
-    bat-extras.batdiff
-    bat-extras.batpipe
-    bat-extras.batwatch
-    bat-extras.prettybat
     fastfetch
     tldr
     superfile

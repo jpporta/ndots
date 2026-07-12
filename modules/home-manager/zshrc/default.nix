@@ -40,7 +40,6 @@
         man = "batman";
         ":q" = "exit";
         so = "source ~/.zshrc";
-        opencode = "OPENCODE_ENABLE_EXA=1 opencode";
         zki = "zk edit --interactive --notebook-dir=~/Documents/Notes";
         enc = "openssl enc -aes-256-cbc -md sha512 -pbkdf2 -iter 1000000 -salt";
         backup = "packup && rm ~/Documents/packup* && mv ~/packup* ~/Documents/ && rsync --archive --update --copy-links ~/Documents 192.168.3.200:/home/jpporta/ --info=progress2";
@@ -51,7 +50,6 @@
         nix-update = "sudo nix-channel --update && sudo nixos-rebuild switch";
         hms = "cd ~/nixos-config && git add . && home-manager switch --flake . ";
         s = "sesh connect $(sesh list | fzf)";
-        openspec = "npx @fission-ai/openspec@latest";
       };
 
       initContent = lib.mkIf config.custom.zsh.fastfetch ''

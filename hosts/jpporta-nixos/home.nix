@@ -30,6 +30,7 @@
     ../../modules/home-manager/nvim
     ../../modules/home-manager/pi
     ../../modules/home-manager/tmux
+    ../../modules/home-manager/openspec
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -85,6 +86,7 @@
     nvim.enable = true;
     pi.enable = true;
     tmux.enable = true;
+    openspec.enable = true;
   };
 
   home.packages =
@@ -101,7 +103,6 @@
 
       eza
       fastfetch
-      bat-extras.batman
       nodejs
       firefox
     ];

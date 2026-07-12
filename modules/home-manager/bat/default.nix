@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
 
   options.custom = {
@@ -6,6 +11,9 @@
   };
 
   config = lib.mkIf config.custom.bat.enable {
+    home.packages = with pkgs; [
+      bat-extras.core
+    ];
     programs.bat = {
       enable = true;
       config = {
