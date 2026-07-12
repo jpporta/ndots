@@ -72,6 +72,7 @@ in
     ripgrep
     fd
     mosh
+    tailscale
     fastfetch
     stow
     tmux
@@ -163,6 +164,12 @@ in
         };
 
         "pc" = {
+          hostname = "jpporta-nixos";
+          user = "jpporta";
+          serverAliveInterval = 30;
+        };
+
+        "pc-lan" = {
           hostname = "192.168.0.100";
           user = "jpporta";
           serverAliveInterval = 30;

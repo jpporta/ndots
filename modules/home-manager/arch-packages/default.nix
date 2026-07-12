@@ -127,6 +127,7 @@ in
     obsidian
     obs-cmd
     qbittorrent
+    liberation_ttf
     zathura
     mpv
     yt-dlp

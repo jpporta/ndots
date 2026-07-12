@@ -13,6 +13,7 @@
     ../../modules/nixos/hyprland
     ../../modules/nixos/steam
     ../../modules/nixos/awsvpn
+    ../../modules/nixos/tailscale
   ];
 
   # Bootloader
@@ -113,6 +114,7 @@
   custom = {
     hyprland.enable = true;
     steam.enable = true;
+    tailscale.enable = true;
   };
 
   ##------------------------------
@@ -208,9 +210,22 @@
   programs.awsVpnClient.enable = true;
   programs.dconf.enable = true;
 
-  # OpenSSH
-  services.openssh.enable = true;
-  programs.mosh.enable = true;
+  # OpenSSH: reachable through the trusted Tailscale interface, but not opened
+  # broadly on every network interface by the firewall.
+  services.openssh = {
+    enable = true;
+    openFirewall = false;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+      AllowUsers = [ "jpporta" ];
+    };
+  };
+  programs.mosh = {
+    enable = true;
+    openFirewall = false;
+  };
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "26.05";
