@@ -83,8 +83,11 @@ in
           font-bold = "${mainFont}:size=${toString fontSize}";
           pad = "12x12";
         };
+        mouse = {
+          hide-when-typing = "yes";
+        };
         scrollback.lines = 10000;
-        cursor.style = "beam";
+        cursor.style = "block";
         colors-dark = {
           alpha = 1.0;
           background = "282828";
