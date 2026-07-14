@@ -171,7 +171,6 @@
       };
     };
     postgresql.enable = true;
-    redis.servers."".enable = true; # valkey/redis
     syncthing = {
       enable = true;
       user = "jpporta";

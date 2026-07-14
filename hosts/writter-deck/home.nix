@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 
 let
@@ -157,11 +158,17 @@ in
           user = "jpporta";
           serverAliveInterval = 30;
         };
+        "pc-ts" = {
+          hostname = "jpporta-nixos";
+          user = "jpporta";
+          serverAliveInterval = 30;
+        };
       };
     };
   };
 
   services.syncthing.enable = true;
+  services.tailscale.enable = true;
 
   home.sessionVariables.TERMINAL = "foot";
 }

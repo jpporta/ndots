@@ -188,29 +188,6 @@ let
       "$text" "$tooltip" "power-profile-$cls" "power-profile-$cls"
   '';
 
-  waybarStyleSnippet = pkgs.writeText "waybar-power-profile.css" ''
-    /* @import this at the top of your `~/.config/waybar/style.css`:
-         @import url("power-profile.css");
-    */
-
-    #custom-power-profile {
-      min-width: 12px;
-      padding: 0 4px;
-      font-family: "BerkeleyMono Nerd Font Propo";
-    }
-
-    #custom-power-profile.caffeinated {
-      color: #fabd2f;
-    }
-
-    #custom-power-profile.headless {
-      color: #83a598;
-    }
-
-    #custom-power-profile.normal {
-      color: #ebdbb2;
-    }
-  '';
 in
 {
   options.custom.power-profiles = {
@@ -228,10 +205,6 @@ in
     # driven by the active-profile symlink. Disable the standalone module
     # to avoid two hypridle processes fighting over the IPC socket.
     custom.hypridle.enable = lib.mkForce false;
-
-    # Drop the waybar snippets where the user can @include them.
-    xdg.configFile."waybar/power-profile.jsonc".source = waybarConfigSnippet;
-    xdg.configFile."waybar/power-profile.css".source = waybarStyleSnippet;
 
     # The systemd user service that runs hypridle with the active config.
     # Started on graphical-session.target so it follows Hyprland's lifecycle.

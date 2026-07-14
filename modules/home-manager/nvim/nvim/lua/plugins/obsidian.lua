@@ -68,7 +68,7 @@ return {
 					suffix = suffix .. string.char(math.random(65, 90))
 				end
 			end
-			return os.date("%s", os.time()) .. suffix
+			return os.date("%s", os.time()) .. "-" .. suffix
 		end,
 		follow_url_func = function(url)
 			vim.ui.open(url) -- need Neovim 0.10.0+
