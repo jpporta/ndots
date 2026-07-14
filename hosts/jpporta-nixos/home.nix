@@ -32,6 +32,7 @@
     ../../modules/home-manager/tmux
     ../../modules/home-manager/openspec
     ../../modules/home-manager/power-profiles
+    ../../modules/home-manager/theme
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -91,6 +92,12 @@
     };
     openspec.enable = true;
     power-profiles.enable = true;
+
+    theme = {
+      enable = true;
+      current = "gruvbox-dark";
+      available = [ "gruvbox-dark" ];
+    };
   };
 
   home.packages =

@@ -13,9 +13,15 @@
   };
 
   config = lib.mkIf config.custom.alacritty.enable {
+    xdg.configFile."alacritty/colors.toml".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/themes/.active/alacritty/colors.toml";
+
     programs.alacritty = {
       enable = true;
       settings = {
+        import = [
+          "~/.config/alacritty/colors.toml"
+        ];
         font = {
           size = 10.3;
           normal = {

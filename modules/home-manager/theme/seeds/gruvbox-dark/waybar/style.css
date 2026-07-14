@@ -1,0 +1,14 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-right": ["pulseaudio", "network", "battery", "clock"],
+  "styles": {
+    "*": {
+      "font-family": "BerkeleyMono Nerd Font Mono",
+      "font-size": "12px",
+      "color": "#ebdbb2",
+      "background": "#282828"
+    }
+  }
+}

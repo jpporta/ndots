@@ -22,10 +22,16 @@ in
     };
     wayland.windowManager.hyprland.settings.input.numlock_by_default = true;
 
+    xdg.configFile."hypr/colors.conf".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/themes/.active/hypr/colors.conf";
+
     xdg.configFile."hypr/hyprland.lua".text = ''
             local home = os.getenv("HOME")
             local config_dir = home .. "/.config/hypr"
             package.path = config_dir .. "/?.lua;" .. config_dir .. "/?/init.lua;" .. package.path
+
+            -- Pull in themed border colors. Lives outside the Nix store.
+            dofile(home .. "/.config/hypr/colors.conf")
 
             -- Monitors ----------------------------------------
             hl.monitor({
@@ -49,10 +55,6 @@ in
             		gaps_in = 7,
             		gaps_out = 10,
             		border_size = 2,
-            		col = {
-            			active_border = "rgba(ebcc71ff)",
-            			inactive_border = "rgba(54461eff)",
-            		},
             		layout = "dwindle",
             	},
             	scrolling = {
@@ -183,6 +185,7 @@ in
             hl.bind(mod .. " + M", hl.dsp.layout("togglesplit")) -- dwindle
             hl.bind(mod .. " + N", hl.dsp.exec_cmd(p.toggle_notifications))
             hl.bind(mod .. " + Space", hl.dsp.exec_cmd(p.menu))
+            hl.bind(mod .. " + T", hl.dsp.exec_cmd("theme-picker"))
             hl.bind("CTRL + ALT + DELETE", hl.dsp.exec_cmd(p.logout_menu))
 
             -- ---------- Focus movement (vim) ----------

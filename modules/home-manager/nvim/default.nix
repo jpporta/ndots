@@ -1,4 +1,7 @@
 { lib, config, pkgs, ... }:
+let
+  themes = config.custom.theme.available or [ ];
+in
 {
 
   options.custom = {
@@ -11,6 +14,13 @@
       fzf
 	  ];
 
-  	xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/ndots/modules/home-manager/nvim/nvim";
+  	xdg.configFile = {
+      "nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/ndots/modules/home-manager/nvim/nvim";
+    }
+    // (lib.listToAttrs (map (theme: {
+      name = "nvim/lua/colors/${theme}.lua";
+      value.source = config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/.config/themes/${theme}/nvim/colors.lua";
+    }) themes));
   };
 }

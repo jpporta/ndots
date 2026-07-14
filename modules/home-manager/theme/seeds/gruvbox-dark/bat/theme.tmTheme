@@ -1,0 +1,4 @@
+-- gruvbox-dark for bat. bat reads --theme-file.
+
+-- stub; replace with full bat theme on first edit
+return {}

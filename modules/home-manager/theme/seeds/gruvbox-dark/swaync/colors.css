@@ -1,0 +1,27 @@
+# gruvbox-dark for swaync. Edit colors as you like; theme-switch reloads via
+# `swaync-client --reload-css`.
+
+* {
+  color: #ebdbb2;
+  background-color: #282828;
+  all: unset;
+  font-size: 12px;
+  font-family: "BerkeleyMono Nerd Font Propo";
+  transition: 200ms;
+}
+
+.notification.critical {
+  border: 2px solid #fb4934;
+}
+
+.control-center {
+  background: rgba(40, 40, 40, 0.7);
+  border-radius: 24px;
+  border: 1px solid #83a598;
+}
+
+button:hover,
+.notification-action:hover {
+  background-color: #504945;
+  border: 1px solid #83a598;
+}

@@ -29,7 +29,10 @@
 
       oh-my-zsh = {
         enable = true;
-        plugins = [ "git" "jj" ];
+        plugins = [
+          "git"
+          "jj"
+        ];
         theme = "";
       };
 
@@ -52,9 +55,10 @@
         s = "sesh connect $(sesh list | fzf)";
       };
 
-      initContent = lib.mkIf config.custom.zsh.fastfetch ''
-        fastfetch
-      '';
+      initContent = lib.concatStingsSep "\n" [
+        "if command -v wt >/dev/null 2>&1; then eval \"$(command wt config shell init zsh)\"; fi"
+        (lib.mkIf config.custom.zsh.fastfetch "fastfetch")
+      ];
     };
   };
 }

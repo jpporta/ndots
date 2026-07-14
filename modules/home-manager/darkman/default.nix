@@ -5,8 +5,6 @@
   ...
 }:
 let
-  schemaDir = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/gsettings-desktop-schemas-${pkgs.gsettings-desktop-schemas.version}/glib-2.0/schemas";
-
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   ensureHis = ''
     if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
@@ -36,28 +34,16 @@ in
         lng = -47.08;
         usegeoclue = false;
       };
-      darkModeScripts = {
-        gtk-theme = ''
-          export GSETTINGS_SCHEMA_DIR=${schemaDir}
-          ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-          ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-        '';
-      }
-      // lib.optionalAttrs hyprsunsetEnabled {
+      # gsettings color-scheme is owned by theme-switch; darkman only drives
+      # hyprsunset for time-of-day temperature.
+      darkModeScripts = lib.optionalAttrs hyprsunsetEnabled {
         hyprsunset = ''
           ${ensureHis}
           ${hyprctl} hyprsunset temperature 4000
           ${hyprctl} hyprsunset gamma 85
         '';
       };
-      lightModeScripts = {
-        gtk-theme = ''
-          export GSETTINGS_SCHEMA_DIR=${schemaDir}
-          ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
-          ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
-        '';
-      }
-      // lib.optionalAttrs hyprsunsetEnabled {
+      lightModeScripts = lib.optionalAttrs hyprsunsetEnabled {
         hyprsunset = ''
           ${ensureHis}
           ${hyprctl} hyprsunset identity

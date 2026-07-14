@@ -1,0 +1,8 @@
+# gruvbox-dark wallpapers
+#
+# Drop images here. Theme-switch does not pick a wallpaper; the user-owned
+# ~/.config/themes/.hook script is the place to do that. Example:
+#
+#   #!/bin/sh
+#   wp="$(find "$HOME/.config/themes/$1/wallpapers" -type f | shuf -n1)"
+#   awww img "$wp" --transition-type any

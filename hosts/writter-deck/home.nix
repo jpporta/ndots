@@ -20,6 +20,7 @@ in
     ../../modules/home-manager/tmux
     ../../modules/home-manager/eza
     ../../modules/home-manager/zoxide
+    ../../modules/home-manager/theme
   ];
 
   home = {
@@ -47,6 +48,12 @@ in
     eza.enable = true;
     bat.enable = true;
     zoxide.enable = true;
+
+    theme = {
+      enable = true;
+      current = "gruvbox-dark";
+      available = [ "gruvbox-dark" ];
+    };
   };
 
   home.packages = with pkgs; [
