@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }:
 
 let
@@ -19,6 +18,7 @@ in
     ../../modules/home-manager/nvim
     ../../modules/home-manager/pi
     ../../modules/home-manager/tmux
+    ../../modules/home-manager/eza
   ];
 
   home = {
@@ -41,6 +41,8 @@ in
     oh-my-posh.enable = true;
     pi.enable = true;
     nvim.enable = true;
+    eza.enable = true;
+    bat.enable = true;
   };
 
   home.packages = with pkgs; [
@@ -81,8 +83,11 @@ in
           font-bold = "${mainFont}:size=${toString fontSize}";
           pad = "12x12";
         };
+        mouse = {
+          hide-when-typing = "yes";
+        };
         scrollback.lines = 10000;
-        cursor.style = "beam";
+        cursor.style = "block";
         colors-dark = {
           alpha = 1.0;
           background = "282828";
