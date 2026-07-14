@@ -57,20 +57,6 @@ return {
 				opts = { buffer = true },
 			},
 		},
-		templates = {
-			subdir = "Templates",
-			date_format = "%Y-%m-%d",
-			time_format = "%H:%M",
-			-- A map for custom variables, the key should be the variable and the value a function
-			substitutions = {
-				date_format = function()
-					return os.date("%Y-%m-%d")
-				end,
-				date_full = function()
-					return os.date("%B %-d, %Y")
-				end,
-			},
-		},
 		note_id_func = function(title)
 			local suffix = ""
 			if title ~= nil then
@@ -82,35 +68,19 @@ return {
 					suffix = suffix .. string.char(math.random(65, 90))
 				end
 			end
-			return os.date("%s", os.time())
-		end,
-		note_frontmatter_func = function(note)
-			-- This is equivalent to the default frontmatter function.
-			local out = {
-				tags = { "#note", "#journal" },
-				created = os.date("%Y-%m-%d %H:%M:%S"),
-			}
-			-- `note.metadata` contains any manually added fields in the frontmatter.
-			-- So here we just make sure those fields are kept in the frontmatter.
-			if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-				for k, v in pairs(note.metadata) do
-					out[k] = v
-				end
-			end
-			return out
+			return os.date("%s", os.time()) .. suffix
 		end,
 		follow_url_func = function(url)
-			-- vim.fn.jobstart({"xdg-open", url})  -- linux
 			vim.ui.open(url) -- need Neovim 0.10.0+
 		end,
 		-- Optional, configure additional syntax highlighting / extmarks.
 		ui = {
-			enable = true, -- set to false to disable all additional syntax features
+			enable = false, -- set to false to disable all additional syntax features
 			update_debounce = 200, -- update delay after a text change (in milliseconds)
 			-- Define how various check-boxes are displayed
 			checkboxes = {
 				-- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
-				[" "] = { char = "", hl_group = "ObsidianTodo" },
+				[" "] = { char = " ", hl_group = "ObsidianTodo" },
 				["x"] = { char = "", hl_group = "ObsidianDone" },
 				[">"] = { char = "", hl_group = "ObsidianRightArrow" },
 				["<"] = { char = "", hl_group = "ObsidianLeftArrow" },
@@ -144,8 +114,45 @@ return {
 				ObsidianHighlightText = { bg = "#75662e" },
 			},
 		},
-		dir = "~/Documents/Notes",
-		new_notes_location = "notes_subdir",
+		--------------------------------
 		notes_subdir = "",
+		new_notes_location = "notes_subdir",
+		workspaces = {
+			{
+				name = "personal",
+				path = "~/docs/personal",
+			},
+		},
+		daily_notes = {
+			folder = "journal",
+			date_format = "%Y-%m-%d",
+			default_tags = { "journal" },
+			template = "journal"
+		},
+		completion = {
+			nvim_cmp = true,
+			min_chars = 2,
+		},
+
+		templates = {
+			subdir = "templates",
+			date_format = "%Y-%m-%d",
+			time_format = "%H:%M",
+		},
+		picker = {
+			name = "telescope.nvim",
+			note_mappings = {
+				-- Create a new note from your query.
+				new = "<C-x>",
+				-- Insert a link to the selected note.
+				insert_link = "<C-l>",
+			},
+			tag_mappings = {
+				-- Add tag(s) to current note.
+				tag_note = "<C-x>",
+				-- Insert a tag at the current location.
+				insert_tag = "<C-l>",
+			},
+		},
 	},
 }

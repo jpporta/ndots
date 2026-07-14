@@ -1,0 +1,4 @@
+schema: spec-driven
+
+  context: |
+    Tech stack: Unix System, NixOS, Flakes, Home-manager
