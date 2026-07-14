@@ -11,7 +11,6 @@ let
 in
 {
   imports = [
-    # Shared home-manager modules
     ../../modules/home-manager/oh-my-posh
     ../../modules/home-manager/zshrc
     ../../modules/home-manager/bat
@@ -20,6 +19,7 @@ in
     ../../modules/home-manager/pi
     ../../modules/home-manager/tmux
     ../../modules/home-manager/eza
+    ../../modules/home-manager/zoxide
   ];
 
   home = {
@@ -44,6 +44,7 @@ in
     nvim.enable = true;
     eza.enable = true;
     bat.enable = true;
+    zoxide.enable = true;
   };
 
   home.packages = with pkgs; [
