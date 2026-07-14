@@ -31,6 +31,7 @@
     ../../modules/home-manager/pi
     ../../modules/home-manager/tmux
     ../../modules/home-manager/openspec
+    ../../modules/home-manager/power-profiles
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -87,6 +88,7 @@
     pi.enable = true;
     tmux.enable = true;
     openspec.enable = true;
+    power-profiles.enable = true;
   };
 
   home.packages =

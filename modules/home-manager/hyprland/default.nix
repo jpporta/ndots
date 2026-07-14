@@ -152,7 +152,7 @@ in
             	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE")
             	hl.exec_cmd("systemctl --user start hyprland-session.target")
             	hl.exec_cmd("waybar")
-            	hl.exec_cmd("hypridle")
+            	hl.exec_cmd("systemctl --user enable --now power-profile-hypridle.service")
             	hl.exec_cmd("swaync")
       	      hl.exec_cmd("hyprctl setcursor Bibata-Modern-Ice-Right 24")
             end)
@@ -257,6 +257,10 @@ in
             -- ---------- Lock / suspend ----------
             hl.bind(mod_alt .. " + L", hl.dsp.exec_cmd("hyprlock"))
             hl.bind(mod .. " + ALT + CTRL + L", hl.dsp.exec_cmd("systemctl suspend"))
+
+            -- ---------- Power profile cycling ----------
+            hl.bind(mod .. " + bracketright", hl.dsp.exec_cmd("power-profile next"))
+            hl.bind(mod .. " + bracketleft", hl.dsp.exec_cmd("power-profile prev"))
 
             -- ---------- Waybar reload ----------
             hl.bind(mod_alt .. " + R", hl.dsp.exec_cmd("/home/jpporta/.config/waybar/scripts/launch.sh"))
