@@ -38,7 +38,9 @@ in
       enable = true;
       fastfetch = false;
     };
-    tmux.enable = true;
+    tmux = {
+      enable = true;
+    };
     oh-my-posh.enable = true;
     pi.enable = true;
     nvim.enable = true;

@@ -86,7 +86,9 @@
 
     nvim.enable = true;
     pi.enable = true;
-    tmux.enable = true;
+    tmux = {
+      enable = true;
+    };
     openspec.enable = true;
     power-profiles.enable = true;
   };
