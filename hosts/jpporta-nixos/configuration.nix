@@ -213,7 +213,7 @@
   # broadly on every network interface by the firewall.
   services.openssh = {
     enable = true;
-    openFirewall = false;
+    openFirewall = true;
     settings = {
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
