@@ -336,6 +336,14 @@ in
             	move = "(3*monitor_w/4)-22 (monitor_h-window_h-22)",
             })
 
+            -- Firefox PiP: no transparency/blur
+            hl.window_rule({
+            	name = "Firefox PiP no blur",
+            	match = { title = "Picture-in-Picture" },
+            	no_blur = true,
+              opacity = "1 override",
+            })
+
             hl.env("QT_QPA_PLATFORMTHEME", "hyprqt6engine")
     '';
   };

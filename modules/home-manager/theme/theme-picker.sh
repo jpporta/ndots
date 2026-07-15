@@ -4,8 +4,9 @@ set -u
 
 DIR=$(dirname "$(readlink -f "$0")")
 
-selected=$("$DIR/theme-switch" list | rofi -dmenu -p "Theme")
+selected=$("$DIR/theme-switch" list | rofi -dmenu -p "Theme" -format f)
 [ -n "$selected" ] || exit 0
 
-name=$(printf '%s' "$selected" | awk -F'\t' '{print $1}')
+# Extract theme name (format: "Display Name (mode)")
+name=$(printf '%s' "$selected" | sed 's/ (.*//')
 exec "$DIR/theme-switch" "$name"

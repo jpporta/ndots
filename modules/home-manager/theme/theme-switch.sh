@@ -16,14 +16,16 @@ list_themes() {
   [ -d "$THEMES_DIR" ] || return 0
   local d mode display
   for d in "$THEMES_DIR"/*/; do
+    # Skip symlinks to avoid duplicates (follows the real path, basename gives the same name)
+    [ -L "$d" ] && continue
     [ -d "$d" ] || continue
     local name
     name=$(basename "$d")
     [ "$name" = ".active" ] && continue
     mode=$(detect_mode "$d" "$name")
     display=$(read_meta_field "$d" "display_name")
-    printf '%s\t%s\t%s\n' "$name" "$mode" "${display:-$name}"
-  done | sort
+    printf '%s (%s)\n' "${display:-$name}" "$mode"
+  done | sort -u
 }
 
 # ponytail: global scan over a few dirs; per-theme lookup if dir count grows.
@@ -42,7 +44,6 @@ detect_mode() {
   local meta_mode
   meta_mode=$(read_meta_field "$dir" "mode")
   if [ -n "$meta_mode" ]; then printf '%s\n' "$meta_mode"; return; fi
-  printf 'dark\n' >&2
   printf 'dark\n'
 }
 
