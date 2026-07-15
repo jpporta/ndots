@@ -22,8 +22,11 @@ in
     };
     wayland.windowManager.hyprland.settings.input.numlock_by_default = true;
 
-    xdg.configFile."hypr/colors.conf".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/themes/.active/hypr/colors.conf";
+    # Use theme seed directly instead of .active symlink
+    # The .active symlink is created during activation, but we need
+    # the file to exist during the build phase
+    xdg.configFile."hypr/colors.lua".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/ndots/modules/home-manager/theme/seeds/gruvbox-dark/hypr/colors.lua";
 
     xdg.configFile."hypr/hyprland.lua".text = ''
             local home = os.getenv("HOME")
@@ -31,7 +34,7 @@ in
             package.path = config_dir .. "/?.lua;" .. config_dir .. "/?/init.lua;" .. package.path
 
             -- Pull in themed border colors. Lives outside the Nix store.
-            dofile(home .. "/.config/hypr/colors.conf")
+            dofile(home .. "/.config/hypr/colors.lua")
 
             -- Monitors ----------------------------------------
             hl.monitor({

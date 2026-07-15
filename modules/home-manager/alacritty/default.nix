@@ -13,13 +13,16 @@
   };
 
   config = lib.mkIf config.custom.alacritty.enable {
+    # Use theme seed directly instead of .active symlink
+    # The .active symlink is created during activation, but we need
+    # the file to exist during the build phase
     xdg.configFile."alacritty/colors.toml".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/themes/.active/alacritty/colors.toml";
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/ndots/modules/home-manager/theme/seeds/gruvbox-dark/alacritty/colors.toml";
 
     programs.alacritty = {
       enable = true;
       settings = {
-        import = [
+        general.import = [
           "~/.config/alacritty/colors.toml"
         ];
         font = {

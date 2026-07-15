@@ -1,0 +1,1 @@
+/home/jpporta/ndots/modules/home-manager/theme/seeds/gruvbox-dark/nvim/colors.lua

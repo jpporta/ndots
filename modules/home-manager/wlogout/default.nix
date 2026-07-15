@@ -52,10 +52,11 @@ in
       ];
     };
 
-    # Replace the auto-generated style.css from programs.wlogout.style with
-    # a symlink into the curated themes tree.
+    # Use theme seed directly instead of .active symlink
+    # The .active symlink is created during activation, but we need
+    # the file to exist during the build phase
     xdg.configFile."wlogout/style.css".source = lib.mkForce (
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/themes/.active/wlogout/style.css"
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/ndots/modules/home-manager/theme/seeds/gruvbox-dark/wlogout/style.css"
     );
   };
 }

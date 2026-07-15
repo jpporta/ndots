@@ -55,10 +55,10 @@
         s = "sesh connect $(sesh list | fzf)";
       };
 
-      initContent = lib.concatStingsSep "\n" [
-        "if command -v wt >/dev/null 2>&1; then eval \"$(command wt config shell init zsh)\"; fi"
-        (lib.mkIf config.custom.zsh.fastfetch "fastfetch")
-      ];
+      initContent = lib.concatStringsSep "\n" (
+        [ "if command -v wt >/dev/null 2>&1; then eval \"$(command wt config shell init zsh)\"; fi" ]
+        ++ lib.optional config.custom.zsh.fastfetch "fastfetch"
+      );
     };
   };
 }
