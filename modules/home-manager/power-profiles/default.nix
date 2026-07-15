@@ -29,12 +29,12 @@ let
     }
 
     listener {
-      timeout = 300
+      timeout = 10
       on-timeout = loginctl lock-session
     }
 
     listener {
-      timeout = 330
+      timeout = 15
       on-timeout = hyprctl dispatch dpms off
       on-resume = hyprctl dispatch dpms on
     }
@@ -74,7 +74,7 @@ let
     set -euo pipefail
 
     STATE_FILE="''${XDG_STATE_HOME:-$HOME/.local/state}/power-profile"
-    ACTIVE_LINK="''${XDG_CONFIG_HOME:-$HOME/.config}/hypr/hypridle.conf"
+    ACTIVE_LINK="''${XDG_CONFIG_HOME:-$HOME/.config}/hypr/hypridle-active.conf"
 
     PROFILES_NORMAL="normal"
     PROFILES_CAFFE="caffeinated"
@@ -199,6 +199,7 @@ in
     home.packages = [
       powerProfileScript
       waybarScript
+      pkgs.hypridle
     ];
 
     # We replace the default hypridle.service with our own service that is
