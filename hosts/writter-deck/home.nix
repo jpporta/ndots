@@ -52,6 +52,7 @@ in
   home.packages = with pkgs; [
     cage
     foot
+    wlr-randr
     git
     ripgrep
     fd

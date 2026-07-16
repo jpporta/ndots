@@ -50,10 +50,20 @@
         nix-update = "sudo nix-channel --update && sudo nixos-rebuild switch";
         hms = "cd ~/ndots && git add . && home-manager switch --flake .#jpporta-deck";
         s = "sesh connect $(sesh list | fzf)";
+        rot90 = "wlr-randr --output HDMI-A-1 --transform 90";
+        rot0 = "wlr-randr --output HDMI-A-1 --transform normal";
+        rotl = "wlr-randr --output HDMI-A-1 --transform 270";
+        rot180 = "wlr-randr --output HDMI-A-1 --transform 180";
       };
 
-      initContent = lib.mkIf config.custom.zsh.fastfetch ''
-        fastfetch
+      initContent = ''
+        ${lib.optionalString config.custom.zsh.fastfetch "fastfetch"}
+        # Auto-rotate screen to portrait when running inside cage/foot
+        # on the writer-deck. Skipped over SSH and other non-Wayland sessions.
+        if [ -n "$WAYLAND_DISPLAY" ] && [ -n "$CAGE_RUNNING" ] && [ "$ROTATED" != "1" ]; then
+          export ROTATED=1
+          wlr-randr --output HDMI-A-1 --transform 90 >/dev/null 2>&1
+        fi
       '';
     };
   };
