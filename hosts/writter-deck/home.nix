@@ -20,6 +20,7 @@ in
     ../../modules/home-manager/tmux
     ../../modules/home-manager/eza
     ../../modules/home-manager/zoxide
+    ../../modules/home-manager/tailscale-daemon
   ];
 
   home = {
@@ -47,6 +48,10 @@ in
     eza.enable = true;
     bat.enable = true;
     zoxide.enable = true;
+    tailscale-daemon = {
+      enable = true;
+      acceptRoutes = true;
+    };
   };
 
   home.packages = with pkgs; [
@@ -56,11 +61,12 @@ in
     ripgrep
     fd
     mosh
-    tailscale
     fastfetch
+    lazygit
     stow
     tmux
   ];
+  # `tailscale`/`ts` shell helpers come from the tailscale-daemon module.
 
   # Non-NixOS host: fixes locales, ld paths, XDG desktop entries
   targets.genericLinux.enable = true;
@@ -162,7 +168,7 @@ in
           serverAliveInterval = 30;
         };
         "pc-ts" = {
-          hostname = "jpporta-nixos";
+          hostname = "jpporta-nixos.taild23e4.ts.net";
           user = "jpporta";
           serverAliveInterval = 30;
         };

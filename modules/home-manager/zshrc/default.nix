@@ -50,6 +50,15 @@
         nix-update = "sudo nix-channel --update && sudo nixos-rebuild switch";
         hms = "cd ~/ndots && git add . && home-manager switch --flake .#jpporta-deck";
         s = "sesh connect $(sesh list | fzf)";
+        # Tailscale shortcuts (writter-deck only really needs these, but
+        # they don't hurt anyone else either). `ts` is the wrapper that
+        # points the CLI at the user-scope socket from the tailscale-daemon
+        # module.
+        ts = "ts";
+        tssh = "ssh pc-ts";
+        tmosh = "mosh pc-ts";
+        ts-status = "ts status";
+        ts-ping = "ts ping -c 3 jpporta-nixos";
       };
 
       initContent = lib.mkIf config.custom.zsh.fastfetch ''
