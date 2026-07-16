@@ -1,0 +1,52 @@
+# Cage intentionally has no IPC API, so status-line clients cannot query its
+# active XKB group. When CAGE_XKB_STATE_FILE is set, keep that file synchronized
+# with the zero-based effective layout index.
+--- a/seat.c
++++ b/seat.c
+@@ -12,6 +12,7 @@
+ 
+ #include <assert.h>
+ #include <linux/input-event-codes.h>
++#include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <wayland-server-core.h>
+@@ -245,8 +246,29 @@
+ }
+ 
+ static void
++write_xkb_layout_state(struct wlr_keyboard *keyboard)
++{
++	const char *path = getenv("CAGE_XKB_STATE_FILE");
++	if (path == NULL || path[0] == '\0' || keyboard->xkb_state == NULL) {
++		return;
++	}
++
++	FILE *state_file = fopen(path, "w");
++	if (state_file == NULL) {
++		return;
++	}
++
++	xkb_layout_index_t layout =
++		xkb_state_serialize_layout(keyboard->xkb_state, XKB_STATE_LAYOUT_EFFECTIVE);
++	fprintf(state_file, "%u\n", (unsigned int)layout);
++	fclose(state_file);
++}
++
++static void
+ handle_modifier_event(struct wlr_keyboard *keyboard, struct cg_seat *seat)
+ {
++	write_xkb_layout_state(keyboard);
++
+ 	wlr_seat_set_keyboard(seat->seat, keyboard);
+ 	wlr_seat_keyboard_notify_modifiers(seat->seat, &keyboard->modifiers);
+ 
+@@ -371,6 +393,8 @@
+ 	wl_signal_add(&cg_group->wlr_group->keyboard.events.modifiers, &cg_group->modifiers);
+ 	cg_group->modifiers.notify = handle_keyboard_group_modifiers;
+ 
++	write_xkb_layout_state(&cg_group->wlr_group->keyboard);
++
+ 	return;
+ 
+ cleanup:

@@ -8,12 +8,39 @@
 let
   mainFont = "Berkeley Mono Nerd Font Mono";
   fontSize = 14;
+
+  # Cage has no IPC for querying its active XKB group. This deck-only build
+  # writes that group to CAGE_XKB_STATE_FILE for the tmux indicator below.
+  cageWithLayoutState = pkgs.cage.overrideAttrs (oldAttrs: {
+    patches = (oldAttrs.patches or [ ]) ++ [ ./cage-xkb-state.patch ];
+  });
+
+  keyboardLayout = pkgs.writeShellApplication {
+    name = "keyboard-layout";
+    runtimeInputs = [ pkgs.coreutils ];
+    text = ''
+      runtime_dir="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+      state_file="''${CAGE_XKB_STATE_FILE:-$runtime_dir/writter-deck-keyboard-layout}"
+      layout=0
+
+      if [[ -r "$state_file" ]]; then
+        IFS= read -r layout < "$state_file" || true
+      fi
+
+      case "$layout" in
+        0) printf 'US' ;;
+        1) printf 'PT' ;;
+        *) printf '?' ;;
+      esac
+    '';
+  };
 in
 {
   imports = [
     ../../modules/home-manager/oh-my-posh
     ../../modules/home-manager/zshrc
     ../../modules/home-manager/bat
+    ../../modules/home-manager/cedilla
     ../../modules/home-manager/opencode
     ../../modules/home-manager/nvim
     ../../modules/home-manager/pi
@@ -40,6 +67,18 @@ in
     };
     tmux = {
       enable = true;
+      extraConfig = ''
+        # Cage does not expose the XKB group through Wayland. The deck-only
+        # Cage patch updates the state file consumed by this status segment.
+        set -g status-interval 1
+        set -ag status-right "#[fg=#89b4fa] KBD:#(${keyboardLayout}/bin/keyboard-layout)"
+      '';
+    };
+    cedilla = {
+      enable = true;
+      # Foot/libxkbcommon handles ~/.XCompose directly; the deck has no NixOS
+      # fcitx5 service at /run/current-system/sw.
+      startFcitx5 = false;
     };
     oh-my-posh.enable = true;
     pi.enable = true;
@@ -50,7 +89,8 @@ in
   };
 
   home.packages = with pkgs; [
-    cage
+    cageWithLayoutState
+    keyboardLayout
     foot
     wlr-randr
     git
@@ -134,7 +174,12 @@ in
           export CAGE_RUNNING=1
           export WLR_RENDERER=pixman
           export XDG_RUNTIME_DIR=''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
-          exec cage -- foot
+          export XKB_DEFAULT_LAYOUT="us,us"
+          export XKB_DEFAULT_VARIANT=",intl"
+          export XKB_DEFAULT_OPTIONS="grp:alt_shift_toggle"
+          export CAGE_XKB_STATE_FILE="$XDG_RUNTIME_DIR/writter-deck-keyboard-layout"
+          rm -f "$CAGE_XKB_STATE_FILE"
+          exec ${cageWithLayoutState}/bin/cage -- ${pkgs.foot}/bin/foot
         fi
       '';
     };
