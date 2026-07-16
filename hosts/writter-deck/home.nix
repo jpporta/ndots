@@ -124,7 +124,13 @@ in
     bash = {
       enable = true;
       profileExtra = ''
-        if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" = "1" ]; then
+        # Auto-launch cage + foot when logging in on tty1 (skip over SSH).
+        # If cage exits, you drop back to the login shell on tty1 instead
+        # of being stuck in a restart loop.
+        if [ "$(tty 2>/dev/null)" = "/dev/tty1" ] \
+           && [ -z "$WAYLAND_DISPLAY" ] \
+           && [ -z "$CAGE_RUNNING" ]; then
+          export CAGE_RUNNING=1
           export WLR_RENDERER=pixman
           export XDG_RUNTIME_DIR=''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
           exec cage -- foot
