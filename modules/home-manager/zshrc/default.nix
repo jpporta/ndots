@@ -54,6 +54,12 @@
         rot0 = "wlr-randr --output HDMI-A-1 --transform normal";
         rotl = "wlr-randr --output HDMI-A-1 --transform 270";
         rot180 = "wlr-randr --output HDMI-A-1 --transform 180";
+        # Tailscale shortcuts (writter-deck only really needs these, but
+        # they don't hurt anyone else either). `ts` is the wrapper that
+        # points the CLI at the user-scope socket from the tailscale-daemon
+        # module.
+        ts-status = "ts status";
+        ts-ping = "ts ping -c 3 jpporta-nixos";
       };
 
       initContent = ''
