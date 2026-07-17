@@ -14,6 +14,7 @@
     ../../modules/nixos/steam
     ../../modules/nixos/awsvpn
     ../../modules/nixos/tailscale
+    ../../modules/nixos/wake-on-lan
   ];
 
   # Bootloader
@@ -115,6 +116,7 @@
     hyprland.enable = true;
     steam.enable = true;
     tailscale.enable = true;
+    wake-on-lan.enable = true;
   };
 
   ##------------------------------

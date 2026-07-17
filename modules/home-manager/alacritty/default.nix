@@ -20,35 +20,30 @@
           size = 10.3;
           normal = {
             family = "BerkeleyMono Nerd Font Mono";
+            style = "Regular";
           };
           bold = {
             family = "BerkeleyMono Nerd Font Mono";
+            style = "ExtraBold";
           };
           italic = {
             family = "BerkeleyMono Nerd Font Mono";
+            style = "Oblique";
           };
           bold_italic = {
             family = "BerkeleyMono Nerd Font Mono";
+            style = "ExtraBold Oblique";
           };
         };
         window = {
           decorations = "None";
           opacity = 0.8;
-          blur = true;
+          blur = false;
           dynamic_padding = true;
           padding = {
             x = 10;
             y = 16;
           };
-        };
-        keyboard = {
-          bindings = [
-            {
-              key = "Return";
-              mods = "Shift";
-              chars = "\u001B\r";
-            }
-          ];
         };
       };
     };
