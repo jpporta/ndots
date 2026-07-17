@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }:
 
 let
@@ -105,7 +104,7 @@ in
     fastfetch
     lazygit
     stow
-    tmux
+    bluetuith
   ];
   # `tailscale`/`ts` shell helpers come from the tailscale-daemon module.
 

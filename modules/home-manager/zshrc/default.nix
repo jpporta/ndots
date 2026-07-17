@@ -58,19 +58,27 @@
         # they don't hurt anyone else either). `ts` is the wrapper that
         # points the CLI at the user-scope socket from the tailscale-daemon
         # module.
+        ts = "tailscale --socket=/tmp/ts-$UID/tailscaled.sock";
         ts-status = "ts status";
         ts-ping = "ts ping -c 3 jpporta-nixos";
       };
 
-      initContent = ''
-        ${lib.optionalString config.custom.zsh.fastfetch "fastfetch"}
-        # Auto-rotate screen to portrait when running inside cage/foot
-        # on the writer-deck. Skipped over SSH and other non-Wayland sessions.
-        if [ -n "$WAYLAND_DISPLAY" ] && [ -n "$CAGE_RUNNING" ] && [ "$ROTATED" != "1" ]; then
-          export ROTATED=1
-          wlr-randr --output HDMI-A-1 --transform 90 >/dev/null 2>&1
-        fi
-      '';
+      initContent = lib.mkMerge [
+        (lib.mkOrder 700 ''
+          # Home Manager normally defines ZSH in .zshenv. Keep it available
+          # when .zshrc is sourced directly as well.
+          export ZSH="${config.programs.zsh.oh-my-zsh.package}/share/oh-my-zsh"
+        '')
+        (lib.mkOrder 1000 ''
+          ${lib.optionalString config.custom.zsh.fastfetch "fastfetch"}
+          # Auto-rotate screen to portrait when running inside cage/foot
+          # on the writer-deck. Skipped over SSH and other non-Wayland sessions.
+          if [ -n "$WAYLAND_DISPLAY" ] && [ -n "$CAGE_RUNNING" ] && [ "$ROTATED" != "1" ]; then
+            export ROTATED=1
+            wlr-randr --output HDMI-A-1 --transform 90 >/dev/null 2>&1
+          fi
+        '')
+      ];
     };
   };
 }
