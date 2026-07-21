@@ -12,6 +12,13 @@
         plugin = [
           "@dietrichgebert/ponytail"
         ];
+        mcp = {
+          n8n = {
+            type = "remote";
+            url = "https://n8n.joaoporta.com/mcp-server/http";
+            enabled = true;
+          };
+        };
       };
     };
   };

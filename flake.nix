@@ -24,6 +24,7 @@
       url = "github:ymatsiuk/awsvpnclient";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hermes-agent.url = "github:NousResearch/hermes-agent";
   };
 
   outputs =
