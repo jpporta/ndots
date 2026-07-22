@@ -1,3 +1,6 @@
+Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or directory.
+Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or directory.
+Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or directory.
 {
   config,
   pkgs,
@@ -32,6 +35,7 @@
     ../../modules/home-manager/tmux
     ../../modules/home-manager/openspec
     ../../modules/home-manager/power-profiles
+    ../../modules/home-manager/ntfy-notify
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -91,8 +95,9 @@
     };
     openspec.enable = true;
     power-profiles.enable = true;
-  };
+    ntfy-notify.enable = true;
 
+  };
   home.packages =
     let
       mediaplayerPython = pkgs.python3.withPackages (ps: with ps; [ pygobject3 ]);
