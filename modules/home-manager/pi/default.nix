@@ -11,7 +11,6 @@
       worktrunk
       sesh
       sl
-      ntfy-sh
       signal-cli
 	  ];
   };
