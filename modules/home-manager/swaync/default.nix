@@ -21,17 +21,17 @@ in
         positionY = "top";
         cssPriority = "user";
 
-        control-center-width = 380;
-        control-center-height = 860;
+        control-center-width = 360;
+        control-center-height = 760;
         control-center-margin-top = 2;
         control-center-margin-bottom = 2;
         control-center-margin-right = 1;
         control-center-margin-left = 0;
 
-        notification-window-width = 400;
-        notification-icon-size = 48;
-        notification-body-image-height = 160;
-        notification-body-image-width = 200;
+        notification-window-width = 360;
+        notification-icon-size = 40;
+        notification-body-image-height = 120;
+        notification-body-image-width = 160;
 
         timeout = 4;
         timeout-low = 2;
@@ -115,7 +115,7 @@ in
       style = ''
         * {
           color: ${text};
-          background-color: ${background}
+          background-color: ${background};
           all: unset;
           font-size: 12px;
           font-family: "BerkeleyMono Nerd Font Propo";
@@ -132,8 +132,8 @@ in
           background: alpha(${background}, 0.9);
           box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.6);
           border: 1px solid ${selected};
-          border-radius: 24px;
-          margin: 16px;
+          border-radius: 14px;
+          margin: 10px;
           padding: 0;
         }
 
@@ -177,7 +177,7 @@ in
           > *
           .notification-action {
           border-radius: 8px;
-          background-color: ${background-alt}};
+          background-color: ${background-alt};
           margin: 6px;
           border: 1px solid transparent;
         }
@@ -252,15 +252,6 @@ in
           background-color: ${selected};
         }
 
-        * {
-          color: ${text};
-
-          all: unset;
-          font-size: 12px;
-          font-family: "BerkeleyMono Nerd Font Propo";
-          transition: 200ms;
-        }
-
         /* Avoid 'annoying' backgroud */
         .blank-window {
           background: transparent;
@@ -269,12 +260,12 @@ in
         /* CONTROL CENTER ------------------------------------------------------------------------ */
 
         .control-center {
-          background: alpha(${background}, 0.7);
-          border-radius: 24px;
+          background: alpha(${background}, 0.85);
+          border-radius: 16px;
           border: 1px solid ${selected};
           box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.6);
-          margin: 18px;
-          padding: 12px;
+          margin: 10px;
+          padding: 10px;
         }
 
         /* Notifications  */
