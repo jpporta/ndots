@@ -33,6 +33,7 @@
     ../../modules/home-manager/openspec
     ../../modules/home-manager/power-profiles
     ../../modules/home-manager/ntfy-notify
+    ../../modules/home-manager/pinentry
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -148,13 +149,7 @@
     gpg.enable = true;
   };
 
-  services.gpg-agent = {
-    enable = true;
-    pinentry.package = pkgs.pinentry-rofi;
-    enableSshSupport = true; # only if you use gpg keys as ssh keys
-    defaultCacheTtl = 3600;
-    maxCacheTtl = 86400;
-  };
+  custom.pinentry.enable = true;
 
   services.swaync.enable = true;
 }
