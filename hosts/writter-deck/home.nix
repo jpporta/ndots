@@ -1,6 +1,7 @@
 { config
 , pkgs
 , lib
+, inputs
 , ...
 }:
 
@@ -47,6 +48,7 @@ in
     ../../modules/home-manager/eza
     ../../modules/home-manager/zoxide
     ../../modules/home-manager/tailscale-daemon
+    ../../modules/home-manager/gpg-agent
   ];
 
   home = {
@@ -90,6 +92,7 @@ in
       enable = true;
       acceptRoutes = true;
     };
+    gpg-agent.enable = true;
   };
 
   home.packages = with pkgs; [
@@ -105,6 +108,7 @@ in
     lazygit
     stow
     bluetuith
+    inputs.hermes-agent.packages.${pkgs.system}.default
   ];
   # `tailscale`/`ts` shell helpers come from the tailscale-daemon module.
 
@@ -207,6 +211,12 @@ in
           controlPersist = "no";
         };
 
+        "hermes" = {
+          hostname = "31.97.166.143";
+          user = "root";
+          serverAliveInterval = 30;
+        };
+
         "pc" = {
           hostname = "jpporta-nixos";
           user = "jpporta";
@@ -222,6 +232,13 @@ in
           hostname = "jpporta-nixos.taild23e4.ts.net";
           user = "jpporta";
           serverAliveInterval = 30;
+          # The writter-deck's tailscaled runs in userspace mode and
+          # cannot push the MagicDNS resolver to /etc/resolv.conf, so
+          # glibc can't resolve `*.taild23e4.ts.net`. Tunnel the TCP
+          # stream through the daemon, which resolves names internally.
+          # The literal UID matches $XDG_RUNTIME_DIR; the writter-deck
+          # is a single-user box so we hardcode it.
+          proxyCommand = "tailscale --socket=/run/user/1001/tailscaled/tailscaled.sock nc %h %p";
         };
       };
     };
