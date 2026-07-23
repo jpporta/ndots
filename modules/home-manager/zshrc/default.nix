@@ -58,7 +58,7 @@
         # they don't hurt anyone else either). `ts` is the wrapper that
         # points the CLI at the user-scope socket from the tailscale-daemon
         # module.
-        ts = "tailscale --socket=/run/user/$UID/tailscaled/tailscaled.sock";
+        ts = "tailscale --socket=/tmp/ts-$UID/tailscaled.sock";
         ts-status = "ts status";
         ts-ping = "ts ping -c 3 jpporta-nixos";
       };
