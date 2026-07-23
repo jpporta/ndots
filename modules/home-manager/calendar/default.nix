@@ -17,6 +17,9 @@
   };
 
   config = lib.mkIf config.custom.jpporta-calendars.enable {
+    home.packages = with pkgs; [
+      seahorse
+    ];
     programs = {
       vdirsyncer.enable = true;
 

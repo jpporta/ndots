@@ -1,6 +1,3 @@
-Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or directory.
-Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or directory.
-Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or directory.
 {
   config,
   pkgs,
@@ -37,6 +34,7 @@ Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or
     ../../modules/home-manager/power-profiles
     ../../modules/home-manager/ntfy-notify
     ../../modules/home-manager/pinentry
+    ../../modules/home-manager/swaync
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -153,10 +151,9 @@ Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+      silent = true;
     };
   };
 
   custom.pinentry.enable = true;
-
-  services.swaync.enable = true;
 }
