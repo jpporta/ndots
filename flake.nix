@@ -28,12 +28,13 @@
   };
 
   outputs =
-    inputs:
+    inputs@{ self, nixpkgs, ... }:
     let
       systems = [
         "x86_64-linux"
         "aarch64-linux"
       ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
       nixosConfigurations.jpporta-nixos = inputs.nixpkgs.lib.nixosSystem {
@@ -61,5 +62,21 @@
           ./hosts/writter-deck/home.nix
         ];
       };
+
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              nixfmt
+              nil # Nix LSP — your Neovim will pick it up via direnv
+              statix # linter, optional
+            ];
+          };
+        }
+      );
     };
 }

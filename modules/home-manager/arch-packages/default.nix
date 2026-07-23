@@ -37,7 +37,6 @@ in
     # nitch
 
     # ---- editors & dev tooling ----
-    tree
     ffmpeg
     chromium
     neovim
@@ -68,15 +67,9 @@ in
     cargo
     php
     julia
-    eslint_d
-    golangci-lint
-    rust-analyzer
     imagemagick
     ghostscript
     ripgrep
-    gopls
-    typescript-language-server
-    nixfmt
 
     # ---- cloud / infra ----
     awscli2

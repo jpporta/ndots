@@ -141,7 +141,6 @@
     glib
     gsettings-desktop-schemas
     zip
-    yarn
   ];
 
   virtualisation.docker.enable = true; # docker, buildx

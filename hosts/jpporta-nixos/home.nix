@@ -112,10 +112,10 @@
       fastfetch
       nodejs
       firefox
+      telegram-desktop
     ];
 
   programs = {
-    nvm.enable = true;
     zen-browser.enable = true;
     git = {
       enable = true;
@@ -147,6 +147,10 @@
       ];
     };
     gpg.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
   };
 
   custom.pinentry.enable = true;
