@@ -1,3 +1,6 @@
+Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or directory.
+Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or directory.
+Warning: Identity file /home/jpporta/.ssh/id_rsa not accessible: No such file or directory.
 {
   config,
   pkgs,
