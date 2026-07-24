@@ -24,7 +24,16 @@ return {
 			return one.row
 		end
 		require("nvim-silicon").setup({
-			font = "JetBrainsMono Nerd Font=24",
+			font = "Berkeley Mono Nerd Font Mono=24",
+			theme = "gruvbox-dark",
+			background = "#bdae93",
+			pad_horiz = 100,
+			pad_vert = 80,
+			line_pad = 2,
+			shadow_blur_radius = 24,
+			shadow_offset_x = 10,
+			shadow_offset_y = 10,
+			shadow_color = "#1d2021",
 			no_window_controls = true,
 			no_line_number = false,
 			line_offset = get_visual() + 1,

@@ -38,6 +38,12 @@ return {
 			desc = "[O]bsidian [T]emplate",
 			mode = "n",
 		},
+		{
+			"<leader>ow",
+			":ObsidianWorkspace<CR>",
+			desc = "[O]bsidian [W]orkspace",
+			mode = "n",
+		},
 	},
 	opts = {
 
@@ -122,12 +128,16 @@ return {
 				name = "personal",
 				path = "~/docs/personal",
 			},
+			{
+				name = "hermes",
+				path = "/mnt/obsidian",
+			},
 		},
 		daily_notes = {
-			folder = "journal",
+			folder = "Journal",
 			date_format = "%Y-%m-%d",
 			default_tags = { "journal" },
-			template = "journal"
+			template = "Daily Note",
 		},
 		completion = {
 			nvim_cmp = true,
@@ -135,7 +145,7 @@ return {
 		},
 
 		templates = {
-			subdir = "templates",
+			subdir = "Templates",
 			date_format = "%Y-%m-%d",
 			time_format = "%H:%M",
 		},

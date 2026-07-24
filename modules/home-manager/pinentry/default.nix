@@ -7,7 +7,12 @@
 
 let
   pinentry-wrapper = pkgs.writeShellScriptBin "pinentry-wrapper" ''
-    if [ -n "''${SSH_CONNECTION:-}" ] || [ -n "''${SSH_TTY:-}" ]; then
+    # ponytail: gpg-agent's env is captured at boot (often on tty1), so SSH_* checks
+    # from the agent miss SSH sessions. Fall back to curses when no usable display
+    # is available, since rofi needs WAYLAND_DISPLAY/DISPLAY the agent may not have.
+    if [ -n "''${SSH_CONNECTION:-}" ] \
+       || [ -n "''${SSH_TTY:-}" ] \
+       || [ -z "''${WAYLAND_DISPLAY:-}" ] && [ -z "''${DISPLAY:-}" ]; then
       exec ${pkgs.pinentry-curses}/bin/pinentry-curses "$@"
     else
       exec ${pkgs.pinentry-rofi}/bin/pinentry-rofi "$@"
