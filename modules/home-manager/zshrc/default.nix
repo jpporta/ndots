@@ -29,7 +29,7 @@
 
       oh-my-zsh = {
         enable = true;
-        plugins = [ "git" "jj" ];
+        plugins = [ "git" "jj" "rbw" ];
         theme = "";
       };
 

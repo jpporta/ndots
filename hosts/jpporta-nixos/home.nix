@@ -35,6 +35,7 @@
     ../../modules/home-manager/ntfy-notify
     ../../modules/home-manager/pinentry
     ../../modules/home-manager/swaync
+    ../../modules/home-manager/bitwarden-cli
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -95,7 +96,7 @@
     openspec.enable = true;
     power-profiles.enable = true;
     ntfy-notify.enable = true;
-
+    bitwarden.enable = true;
   };
   home.packages =
     let
