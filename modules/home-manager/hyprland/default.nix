@@ -240,6 +240,7 @@ in
             hl.bind(mod_shft .. " + 2", hl.dsp.exec_cmd("hyprshot -m output -m DP-1 -o ~/Pictures/Screenshots"))
             hl.bind(mod_shft .. " + 3", hl.dsp.exec_cmd("hyprshot -m window -m active -o ~/Pictures/Screenshots"))
             hl.bind(mod_shft .. " + 4", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots"))
+            hl.bind(mod_shft .. " + 5", hl.dsp.exec_cmd("gif-recorder"))
 
             -- ---------- OBS Recording ----------
             hl.bind(mod_shft .. " + 9", hl.dsp.exec_cmd("obs-cmd recording toggle"))
