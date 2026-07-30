@@ -56,7 +56,7 @@ in
         subscribe:
       '' + lib.concatMapStringsSep "\n" (sub:
         let
-          cmd = "notify-send -a Kanban -u ${sub.priority} \"Kanban Update\" \"$m\"";
+          cmd = "${lib.getExe pkgs.libnotify} -a Kanban -u ${sub.priority} \"Kanban Update\" \"$m\"";
         in
         "  - topic: ${cfg.server}/${sub.topic}\n"
         + "    command: ${cmd}"
@@ -71,7 +71,7 @@ in
       };
       Service = {
         Type = "simple";
-        ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe";
+        ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe --from-config";
         Restart = "on-failure";
         RestartSec = 10;
       };
