@@ -27,6 +27,7 @@
     ../../modules/home-manager/opencode
     ../../modules/home-manager/cedilla
     ../../modules/home-manager/dictation
+    ../../modules/home-manager/gif-recorder
     ../../modules/home-manager/nvim
     ../../modules/home-manager/pi
     ../../modules/home-manager/tmux
@@ -87,6 +88,7 @@
       enable = true;
       modelHash = "sha256-ZNGCtEC5jVIDxPm9VBVE2ExgUZbE97hF36EfsjWU0eI=";
     };
+    gif-recorder.enable = true;
 
     nvim.enable = true;
     pi.enable = true;
@@ -115,6 +117,8 @@
       nodejs
       firefox
       telegram-desktop
+      koreader
+      xorg.xauth
     ];
 
   programs = {

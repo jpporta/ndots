@@ -3,16 +3,21 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   bw = pkgs.writeShellApplication {
     name = "bw";
-    runtimeInputs = with pkgs; [ rbw fzf wl-clipboard libnotify ];
+    runtimeInputs = with pkgs; [
+      rbw
+      fzf
+      wl-clipboard
+      libnotify
+    ];
     text = ''
       set -euo pipefail
       cmd="$(basename "$0")"
 
-      entry="$(rbw list --fields=id,name,user --format=tsv \
-        | fzf --with-nth=2.. --delimiter=$'\t')"
+      entry="$(rbw list --fields=id,name,user | fzf --with-nth=2.. --delimiter=$'\t')"
       [ -z "$entry" ] && exit 0
 
       id="$(printf '%s' "$entry" | cut -f1)"
@@ -28,7 +33,8 @@
       notify-send -t 1200 "bw: copied $cmd"
     '';
   };
-in {
+in
+{
   options.custom = {
     bitwarden.enable = lib.mkEnableOption "enable bitwarden - CLI password manager";
   };
@@ -45,14 +51,20 @@ in {
     };
 
     home.packages =
-      let mkBin = name:
-        pkgs.symlinkJoin {
-          inherit name;
-          paths = [ bw ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          postBuild = "ln -sf ${bw}/bin/bw $out/bin/${name}";
-        };
+      let
+        mkBin =
+          name:
+          pkgs.symlinkJoin {
+            inherit name;
+            paths = [ bw ];
+            nativeBuildInputs = [ pkgs.makeWrapper ];
+            postBuild = "ln -sf ${bw}/bin/bw $out/bin/${name}";
+          };
       in
-        builtins.map mkBin [ "bwp" "bwc" "bwu" ];
+      builtins.map mkBin [
+        "bwp"
+        "bwc"
+        "bwu"
+      ];
   };
 }
