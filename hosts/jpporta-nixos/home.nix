@@ -97,7 +97,23 @@
     };
     openspec.enable = true;
     power-profiles.enable = true;
-    ntfy-notify.enable = true;
+    ntfy-notify = {
+      enable = true;
+      server = "https://ntfy.joaoporta.com";
+      subscriptions = [
+        {
+          priority = "normal";
+          topic = "music-download";
+          title = "Music Downloaded";
+        }
+        {
+          priority = "critical";
+          topic = "joao-kanban";
+          title = "Kanban Update";
+        }
+      ];
+
+    };
     bitwarden.enable = true;
   };
   home.packages =
