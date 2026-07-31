@@ -135,6 +135,7 @@
       telegram-desktop
       koreader
       xorg.xauth
+      easyeffects
     ];
 
   programs = {
