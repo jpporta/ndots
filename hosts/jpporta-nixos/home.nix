@@ -37,6 +37,7 @@
     ../../modules/home-manager/pinentry
     ../../modules/home-manager/swaync
     ../../modules/home-manager/bitwarden-cli
+    ../../modules/home-manager/alarms-timers
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -115,6 +116,7 @@
 
     };
     bitwarden.enable = true;
+    alarms-timers.enable = true;
   };
   home.packages =
     let
