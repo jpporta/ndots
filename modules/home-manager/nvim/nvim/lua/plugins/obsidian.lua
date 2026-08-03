@@ -125,12 +125,8 @@ return {
 		new_notes_location = "notes_subdir",
 		workspaces = {
 			{
-				name = "personal",
-				path = "~/docs/personal",
-			},
-			{
 				name = "hermes",
-				path = "/mnt/documents/journal",
+				path = "/mnt/obsidian",
 			},
 		},
 		daily_notes = {
