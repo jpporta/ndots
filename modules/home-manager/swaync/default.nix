@@ -12,7 +12,7 @@
     services.swaync = {
       enable = true;
       settings = {
-        positionX = "left";
+        positionX = "center";
         positionY = "top";
         cssPriority = "user";
 
