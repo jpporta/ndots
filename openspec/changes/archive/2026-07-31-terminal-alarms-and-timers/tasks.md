@@ -35,7 +35,7 @@
 - [x] 5.3 Add safely escaped descriptions to Waybar tooltips and emit empty text when no events exist.
 - [x] 5.4 Update `~/dotfiles/waybar/.config/waybar/config.jsonc` with `custom/alarm` immediately after workspaces, one-second refresh, JSON return type, and no click actions.
 - [x] 5.5 Update the Waybar stylesheet selector for the new module and verify it matches the existing visual treatment.
-- [ ] 5.6 Reload Waybar and manually verify mixed timer/alarm ordering, three-item truncation, countdown updates, tooltip content, and hidden empty state.
+- [x] 5.6 Reload Waybar and manually verify mixed timer/alarm ordering, three-item truncation, countdown updates, tooltip content, and hidden empty state.
 
 ## 6. End-to-End Verification
 
