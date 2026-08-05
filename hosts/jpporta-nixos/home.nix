@@ -32,6 +32,7 @@
     ../../modules/home-manager/pi
     ../../modules/home-manager/tmux
     ../../modules/home-manager/openspec
+    ../../modules/home-manager/dev-orchestrator
     ../../modules/home-manager/power-profiles
     ../../modules/home-manager/ntfy-notify
     ../../modules/home-manager/pinentry
@@ -97,6 +98,7 @@
       enable = true;
     };
     openspec.enable = true;
+    dev-orchestrator.enable = true;
     power-profiles.enable = true;
     ntfy-notify = {
       enable = true;
