@@ -6,6 +6,16 @@
 }:
 let
   cfg = config.custom.ntfy-notify;
+  ntfy-notify = pkgs.writeShellApplication {
+    name = "ntfy-notify-authenticated";
+    runtimeInputs = with pkgs; [ ntfy-sh rbw ];
+    text = ''
+      username="$(rbw get --field username ntfy.joaoporta.com)"
+      password="$(rbw get ntfy.joaoporta.com)"
+      export NTFY_USER="$username:$password"
+      exec ntfy subscribe --from-config
+    '';
+  };
 in
 {
   options.custom.ntfy-notify = {
@@ -24,6 +34,10 @@ in
             type = lib.types.str;
             description = "ntfy topic to subscribe to.";
           };
+          title = lib.mkOption {
+            type = lib.types.str;
+            description = "Notification title for this topic";
+          };
           priority = lib.mkOption {
             type = lib.types.enum [ "low" "normal" "critical" ];
             default = "normal";
@@ -35,6 +49,7 @@ in
         {
           topic = "joao-kanban";
           priority = "critical";
+          title = "Kanban Update";
         }
       ];
       description = ''
@@ -56,7 +71,7 @@ in
         subscribe:
       '' + lib.concatMapStringsSep "\n" (sub:
         let
-          cmd = "notify-send -a Kanban -u ${sub.priority} \"Kanban Update\" \"$m\"";
+          cmd = "${lib.getExe pkgs.libnotify} -a ntfy -u ${sub.priority} \"${sub.title}\" \"$m\"";
         in
         "  - topic: ${cfg.server}/${sub.topic}\n"
         + "    command: ${cmd}"
@@ -71,7 +86,7 @@ in
       };
       Service = {
         Type = "simple";
-        ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe";
+        ExecStart = "${ntfy-notify}/bin/ntfy-notify-authenticated";
         Restart = "on-failure";
         RestartSec = 10;
       };

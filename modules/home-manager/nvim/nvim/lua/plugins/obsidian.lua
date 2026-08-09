@@ -38,6 +38,12 @@ return {
 			desc = "[O]bsidian [T]emplate",
 			mode = "n",
 		},
+		{
+			"<leader>ow",
+			":ObsidianWorkspace<CR>",
+			desc = "[O]bsidian [W]orkspace",
+			mode = "n",
+		},
 	},
 	opts = {
 
@@ -119,15 +125,15 @@ return {
 		new_notes_location = "notes_subdir",
 		workspaces = {
 			{
-				name = "personal",
-				path = "~/docs/personal",
+				name = "hermes",
+				path = "/mnt/obsidian",
 			},
 		},
 		daily_notes = {
-			folder = "journal",
+			folder = "Journal",
 			date_format = "%Y-%m-%d",
 			default_tags = { "journal" },
-			template = "journal"
+			template = "Daily Note",
 		},
 		completion = {
 			nvim_cmp = true,
@@ -135,9 +141,30 @@ return {
 		},
 
 		templates = {
-			subdir = "templates",
+			subdir = "Templates",
 			date_format = "%Y-%m-%d",
 			time_format = "%H:%M",
+			substitutions = {
+				week = function()
+					return os.date("%W", os.time())
+				end,
+				day = function()
+					local d = os.date("%w", os.time())
+					local r = {
+						["0"] = "Sunday",
+						["1"] = "Monday",
+						["2"] = "Tuesday",
+						["3"] = "Wednesday",
+						["4"] = "Thursday",
+						["5"] = "Friday",
+						["6"] = "Saturday",
+					}
+					return r[d]
+				end,
+				full_date = function()
+					return os.date("%A, %B %d, %Y", os.time())
+				end,
+			},
 		},
 		picker = {
 			name = "telescope.nvim",

@@ -2,6 +2,14 @@ return {
 	"michaelrommel/nvim-silicon",
 	lazy = true,
 	cmd = "Silicon",
+	keys = {
+		{
+			"<leader>s",
+			"<cmd>Silicon<CR>",
+			desc = "[C]ode [S]elfie",
+			mode = "v",
+		},
+	},
 	config = function()
 		local get_visual = function()
 			local curpos = vim.fn.getcurpos()
@@ -10,21 +18,27 @@ return {
 
 			if one.row == two.row then
 				if one.col > two.col then
-					local tmp = one
-					one = two
-					two = tmp
+					one, two = two, one
 				end
 			elseif one.row > two.row then
-				local tmp = one
-				one = two
-				two = tmp
+				one, two = two, one
 			end
 
 			two.col = two.col + 1
 			return one.row
 		end
+
 		require("nvim-silicon").setup({
-			font = "JetBrainsMono Nerd Font=24",
+			font = "Berkeley Mono Nerd Font Mono=24",
+			theme = "gruvbox-dark",
+			background = "#bdae93",
+			pad_horiz = 100,
+			pad_vert = 80,
+			line_pad = 2,
+			shadow_blur_radius = 24,
+			shadow_offset_x = 10,
+			shadow_offset_y = 10,
+			shadow_color = "#1d2021",
 			no_window_controls = true,
 			no_line_number = false,
 			line_offset = get_visual() + 1,
@@ -36,6 +50,5 @@ return {
 				return vim.bo.filetype
 			end,
 		})
-		vim.keymap.set("v", "<leader>cs", "<cmd>'<,'>Silicon<CR>", { desc = "[C]ode [S]elfie" })
 	end,
 }

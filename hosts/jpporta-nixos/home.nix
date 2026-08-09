@@ -27,13 +27,18 @@
     ../../modules/home-manager/opencode
     ../../modules/home-manager/cedilla
     ../../modules/home-manager/dictation
+    ../../modules/home-manager/gif-recorder
     ../../modules/home-manager/nvim
     ../../modules/home-manager/pi
     ../../modules/home-manager/tmux
     ../../modules/home-manager/openspec
+    ../../modules/home-manager/dev-orchestrator
     ../../modules/home-manager/power-profiles
     ../../modules/home-manager/ntfy-notify
     ../../modules/home-manager/pinentry
+    ../../modules/home-manager/swaync
+    ../../modules/home-manager/bitwarden-cli
+    ../../modules/home-manager/alarms-timers
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -85,6 +90,7 @@
       enable = true;
       modelHash = "sha256-ZNGCtEC5jVIDxPm9VBVE2ExgUZbE97hF36EfsjWU0eI=";
     };
+    gif-recorder.enable = true;
 
     nvim.enable = true;
     pi.enable = true;
@@ -92,9 +98,27 @@
       enable = true;
     };
     openspec.enable = true;
+    dev-orchestrator.enable = true;
     power-profiles.enable = true;
-    ntfy-notify.enable = true;
+    ntfy-notify = {
+      enable = true;
+      server = "https://ntfy.joaoporta.com";
+      subscriptions = [
+        {
+          priority = "normal";
+          topic = "music-download";
+          title = "Music Downloaded";
+        }
+        {
+          priority = "critical";
+          topic = "joao-kanban";
+          title = "Kanban Update";
+        }
+      ];
 
+    };
+    bitwarden.enable = true;
+    alarms-timers.enable = true;
   };
   home.packages =
     let
@@ -113,6 +137,9 @@
       nodejs
       firefox
       telegram-desktop
+      koreader
+      xorg.xauth
+      easyeffects
     ];
 
   programs = {
@@ -150,10 +177,9 @@
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+      silent = true;
     };
   };
 
   custom.pinentry.enable = true;
-
-  services.swaync.enable = true;
 }

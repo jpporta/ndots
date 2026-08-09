@@ -13,6 +13,7 @@
     ../../modules/nixos/hyprland
     ../../modules/nixos/steam
     ../../modules/nixos/awsvpn
+    ../../modules/nixos/keyd
     ../../modules/nixos/tailscale
     ../../modules/nixos/wake-on-lan
     ../../modules/nixos/hermes
@@ -72,6 +73,19 @@
         "x-systemd.device-timeout=10s"
       ];
     };
+
+    "/mnt/obsidian" = {
+      device = "//100.90.248.13/ObsidianVault";
+      fsType = "cifs";
+      options = [
+        "credentials=/etc/samba/obsidian-credentials"
+        "uid=1000"
+        "gid=100"
+        "noperm"
+        "x-systemd.automount"
+        "noatime"
+      ];
+    };
   };
 
   # Networking
@@ -120,6 +134,10 @@
     tailscale.enable = true;
     wake-on-lan.enable = true;
     hermes.enable = true;
+    keyd = {
+      enable = false;
+      internalIds = [ "1ea7:0907" ];
+    };
   };
 
   ##------------------------------
@@ -166,17 +184,6 @@
       jack.enable = true; # only if you use jack apps (reaper, etc.)
       wireplumber.enable = true;
     };
-    keyd = {
-      enable = true;
-      keyboards.default = {
-        ids = [ "*" ]; # or specific vendor:product ids
-        settings = {
-          main = {
-            capslock = "overload(control, esc)"; # translate your default.conf here
-          };
-        };
-      };
-    };
     postgresql.enable = true;
     syncthing = {
       enable = true;
@@ -218,21 +225,25 @@
 
   # OpenSSH: reachable through the trusted Tailscale interface, but not opened
   # broadly on every network interface by the firewall.
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";
-      AllowUsers = [ "jpporta" ];
+  services = {
+    openssh = {
+      enable = true;
+      openFirewall = true;
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+        PermitRootLogin = "no";
+        AllowUsers = [ "jpporta" ];
+      };
     };
+
+    gnome.gnome-keyring.enable = true;
   };
   programs.mosh = {
     enable = true;
     openFirewall = false;
   };
-
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "26.05";
+
 }

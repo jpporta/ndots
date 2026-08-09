@@ -1,0 +1,306 @@
+#!/usr/bin/env bash
+# dev-orchestrator — OpenSpec + OpenCode dev→QA loop with git worktrees
+# Zero dependencies beyond git, opencode, openspec. No heavy binaries.
+set -euo pipefail
+
+REPO="${DEV_FLOW_REPO:-$(pwd)}"
+WORKTREE_ROOT="$REPO/../.worktrees"
+
+# ── helpers ──────────────────────────────────────────────────────
+
+_wt_path()  { echo "$WORKTREE_ROOT/$1"; }
+_wt_branch(){ echo "dev-flow/$1"; }
+
+_die() { echo "✗ $*" >&2; exit 1; }
+_ok()  { echo "✓ $*"; }
+
+# Ensure we're inside a git repo with openspec
+_guard() {
+    cd "$REPO"
+    git rev-parse --show-toplevel >/dev/null 2>&1 || _die "not a git repo: $REPO"
+    [ -d openspec ] || _die "openspec not initialized. Run: dev-orchestrator init"
+}
+
+# ── commands ─────────────────────────────────────────────────────
+
+cmd_init() {
+    cd "$REPO"
+    git rev-parse --show-toplevel >/dev/null 2>&1 || _die "not a git repo"
+
+    mkdir -p "$WORKTREE_ROOT"
+    if [ -d openspec ]; then
+        _ok "openspec already initialized"
+    else
+        openspec init --tools opencode --force
+        _ok "openspec initialized"
+    fi
+
+    grep -qxF '.worktrees/' .gitignore 2>/dev/null || {
+        echo '.worktrees/' >> .gitignore
+        _ok "added .worktrees/ to .gitignore"
+    }
+
+    echo ""
+    echo "Repo ready. Next: dev-orchestrator spec <feature-name>"
+}
+
+cmd_spec() {
+    local name="$1"
+    _guard
+
+    # ── validate name (kebab-case) ──
+    [[ "$name" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]] || _die "name must be kebab-case: add-oauth, fix-login"
+
+    # ── create OpenSpec change ──
+    echo "── Creating OpenSpec change: $name ──"
+    openspec new change "$name" --json 2>/dev/null || {
+        _die "openspec new change failed. Already exists? Run: dev-orchestrator status"
+    }
+
+    # ── create worktree ──
+    local branch; branch="$(_wt_branch "$name")"
+    local wt; wt="$(_wt_path "$name")"
+    echo "── Creating worktree: $wt [$branch] ──"
+    git worktree add -b "$branch" "$wt" HEAD
+
+    # ── install deps in worktree (fully isolated, no symlinks) ──
+    if [ -f "$wt/package.json" ]; then
+        echo "── Installing dependencies ──"
+        (cd "$wt" && npm install --silent 2>&1 | tail -1) || true
+    fi
+    if [ -f "$wt/pyproject.toml" ] || [ -f "$wt/setup.py" ]; then
+        # shellcheck disable=SC1091
+        (cd "$wt" && [ -d .venv ] || python3 -m venv .venv && . .venv/bin/activate && pip install -e . -q 2>&1 | tail -1) || true
+    fi
+
+    echo ""
+    _ok "Spec '$name' scaffolded at openspec/changes/$name/"
+    echo "   Worktree: $wt"
+    echo ""
+    echo "   ── Next: explore in OpenCode ──"
+    echo "   opencode"
+    echo "   Then use OpenSpec native commands:"
+    echo "     /opsx:explore   — discuss the feature, refine requirements"
+    echo "     /opsx:continue  — fill spec artifacts one by one"
+    echo ""
+    echo "   After specs are filled → dev-orchestrator build $name"
+}
+
+cmd_fill() {
+    local name="$1"
+    _guard
+
+    local wt; wt="$(_wt_path "$name")"
+    [ -d "openspec/changes/$name" ] || _die "spec not found: openspec/changes/$name. Run: dev-orchestrator spec $name"
+
+    echo "── AI filling spec from conversation context ──"
+    opencode run \
+        "You are filling an OpenSpec change for feature: $name.
+
+         STEPS:
+         1. Read the codebase structure first (scan src/, lib/, or equivalent).
+         2. Read openspec/changes/$name/ — note the template files created.
+         3. Read openspec/specs/ for existing specs to avoid conflicts.
+         4. For each template file in the change directory, fill it with:
+            - Clear requirements and acceptance criteria
+            - Files that need to change
+            - Dependencies on other modules
+            - Test plan
+         5. Run: openspec validate $name --strict
+         6. Fix any validation errors, re-run until clean.
+         7. Output a summary: spec files created, key decisions, estimated scope." \
+        --workdir "$REPO"
+
+    echo ""
+    _ok "Spec '$name' filled at openspec/changes/$name/"
+    echo "   Review the spec, then: dev-orchestrator build $name"
+}
+
+cmd_build() {
+    local name="$1"
+    _guard
+
+    local wt; wt="$(_wt_path "$name")"
+    [ -d "$wt" ] || _die "worktree not found: $wt. Run: dev-orchestrator spec $name"
+
+    local branch; branch="$(_wt_branch "$name")"
+    local max_retries=3
+
+    for attempt in $(seq 1 $max_retries); do
+        echo ""
+        echo "══════════════════════════════════════════════════"
+        echo "  $name — Dev Phase (attempt $attempt/$max_retries)"
+        echo "══════════════════════════════════════════════════"
+
+        opencode run \
+            "IMPLEMENT the spec at openspec/changes/$name/.
+             
+             RULES:
+             - Read openspec instructions --change $name first
+             - Implement ALL requirements from the spec
+             - Write tests for every new code path
+             - Run the test suite and ensure it passes
+             - If tests fail, fix them before considering work done
+             - Commit with message: '$name: implement feature (attempt $attempt)'
+             - Do NOT modify openspec/ files — only source code and tests" \
+            --workdir "$wt" || {
+            echo "⚠ Dev phase had errors, proceeding to QA anyway..."
+        }
+
+        # ── QA phase ──
+        echo ""
+        echo "──────────────────────────────────────────────────"
+        echo "  $name — QA Review"
+        echo "──────────────────────────────────────────────────"
+
+        local qa_file="/tmp/dev-orchestrator-qa-$$.txt"
+        opencode run \
+            "QA REVIEW for $name.
+
+             CHECKLIST (answer each with PASS or FAIL):
+             1. SPEC COMPLIANCE — Does the code implement everything in openspec/changes/$name/?
+             2. TESTS — Do all tests pass? Run them now.
+             3. REGRESSIONS — Does any existing test break? Check git diff vs main.
+             4. EDGE CASES — Are errors handled? Null/empty inputs? Timeouts?
+             5. CODE QUALITY — Clear naming? No debug leftovers? No commented-out code?
+
+             OUTPUT FORMAT (exactly these 2 lines, nothing else):
+             VERDICT: PASS|FAIL
+             REASON: <one-sentence summary>" \
+            --workdir "$wt" > "$qa_file" 2>&1
+
+        local verdict
+        verdict=$(grep '^VERDICT:' "$qa_file" | head -1 | awk -F': ' '{print $2}')
+        local reason
+        reason=$(grep '^REASON:' "$qa_file" | head -1 | cut -d' ' -f2-)
+
+        if [ "$verdict" = "PASS" ]; then
+            echo ""
+            _ok "QA PASSED — $reason"
+
+            # ── archive + merge ──
+            cd "$REPO"
+            echo "── Archiving spec ──"
+            openspec archive "$name" --yes 2>/dev/null || true
+
+            echo "── Merging to main ──"
+            git merge "$branch" -m "dev-flow: merge $name" 2>/dev/null || {
+                echo "⚠ Merge conflict. Resolve manually in $wt then run:"
+                echo "   cd $wt && git checkout main && git merge $branch"
+                return 1
+            }
+
+            echo "── Cleaning up worktree ──"
+            git worktree remove "$wt" 2>/dev/null || true
+            git branch -d "$branch" 2>/dev/null || true
+
+            echo ""
+            _ok "$name — BUILD COMPLETE ✓"
+            rm "$qa_file"
+            return 0
+        fi
+
+        echo ""
+        echo "✗ QA FAILED — ${reason:-see $qa_file}"
+        rm "$qa_file"
+
+        if [ "$attempt" -eq "$max_retries" ]; then
+            _die "$name FAILED after $max_retries attempts. Worktree kept at $wt for manual fix."
+        fi
+        echo "↻ Sending back to dev with QA feedback..."
+    done
+}
+
+cmd_status() {
+    _guard 2>/dev/null || true
+
+    echo ""
+    printf "%-4s %-30s %-10s %-10s %-15s\n" "#" "FEATURE" "COMMITS" "SPEC" "WORKTREE"
+    printf "%-4s %-30s %-10s %-10s %-15s\n" "───" "──────────────────────────────" "──────────" "──────────" "──────────────"
+
+    local n=0
+    for wt in "$WORKTREE_ROOT"/*/; do
+        [ -d "$wt" ] || continue
+        local name
+        name=$(basename "$wt")
+        local branch; branch="$(_wt_branch "$name")"
+        local commits="?"
+        [ -d "$wt/.git" ] && commits=$(cd "$wt" && git rev-list --count "$branch" -- 2>/dev/null || echo "?")
+        commits="${commits:-0}"
+
+        # spec status
+        local spec="?"
+        [ -d "$REPO/openspec/changes/$name" ] && {
+            spec=$(cd "$REPO" && openspec status --change "$name" --json 2>/dev/null | \
+                python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('artifacts_completed','?'),'/',d.get('artifacts_total','?'),sep='')" 2>/dev/null || echo "active")
+        }
+
+        n=$((n+1))
+        printf "%-4s %-30s %-10s %-10s %-15s\n" \
+            "$n." "$name" "$commits" "${spec:-active}" "$wt"
+    done
+
+    if [ "$n" -eq 0 ]; then
+        echo "  (no active features)"
+    fi
+    echo ""
+}
+
+cmd_clean() {
+    local name="$1"
+    cd "$REPO"
+    local wt; wt="$(_wt_path "$name")"
+    local branch; branch="$(_wt_branch "$name")"
+
+    git worktree remove "$wt" 2>/dev/null || true
+    git branch -D "$branch" 2>/dev/null || true
+    if [ ! -d "$wt" ]; then
+        _ok "cleaned $name"
+    else
+        _die "could not remove $wt"
+    fi
+}
+
+# ── dispatch ─────────────────────────────────────────────────────
+
+case "${1:-}" in
+    init)
+        cmd_init
+        ;;
+    spec)
+        [ $# -ge 2 ] || _die "usage: dev-orchestrator spec <feature-name>"
+        cmd_spec "$2"
+        ;;
+    fill)
+        [ $# -ge 2 ] || _die "usage: dev-orchestrator fill <feature-name>"
+        cmd_fill "$2"
+        ;; 
+    build)
+        [ $# -ge 2 ] || _die "usage: dev-orchestrator build <feature-name>"
+        cmd_build "$2"
+        ;;
+    status)
+        cmd_status
+        ;;
+    clean)
+        [ $# -ge 2 ] || _die "usage: dev-orchestrator clean <feature-name>"
+        cmd_clean "$2"
+        ;;
+    *)
+        echo "dev-orchestrator — OpenSpec + OpenCode dev→QA loop"
+        echo ""
+        echo "commands:"
+        echo "  init                       Set up repo (run once per project)"
+        echo "  spec   <feature-name>      Scaffold OpenSpec + worktree (no fill)"
+        echo "  fill   <feature-name>      AI fills spec after exploration"
+        echo "  build  <feature-name>      Dev→QA loop in isolated worktree"
+        echo "  status                     Kanban view of features in flight"
+        echo "  clean  <feature-name>      Remove worktree + branch"
+        echo ""
+        echo "flow: init → spec → [explore in OpenCode] → fill → build → [QA loop]"
+        echo ""
+        echo "worktrees live at: ../.worktrees/<feature>/"
+        echo "branches named:    dev-flow/<feature>"
+        exit 1
+        ;;
+esac

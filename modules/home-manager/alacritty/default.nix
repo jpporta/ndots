@@ -17,7 +17,7 @@
       enable = true;
       settings = {
         font = {
-          size = 10.3;
+          size = 11;
           normal = {
             family = "BerkeleyMono Nerd Font Mono";
             style = "Regular";
