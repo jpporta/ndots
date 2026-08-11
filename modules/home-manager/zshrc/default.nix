@@ -29,7 +29,11 @@
 
       oh-my-zsh = {
         enable = true;
-        plugins = [ "git" "jj" "rbw" ];
+        plugins = [
+          "git"
+          "jj"
+          "rbw"
+        ];
         theme = "";
       };
 
@@ -46,8 +50,8 @@
         gn = "git commit -m \"$(date)\"";
         nixs = "cd ~/ndots && git add . && sudo nixos-rebuild switch --flake ~/ndots#jpporta-nixos";
         nix-search = "nix --extra-experimental-features \"nix-command flakes\" search nixpkgs";
-        nix-garbage = "sudo nix-collect-garbage -d && sudo nixos-rebuild switch";
-        nix-update = "sudo nix-channel --update && sudo nixos-rebuild switch";
+        nix-garbage = "sudo nix-collect-garbage -d && sudo nixos-rebuild switch --flake ~/ndots#jpporta-nixos";
+        nix-update = "sudo nix-channel --update && sudo nixos-rebuild switch --flake ~/ndots#jpporta-nixos";
         hms = "cd ~/ndots && git add . && home-manager switch --flake .#jpporta-deck";
         s = "sesh connect $(sesh list | fzf)";
         rot90 = "wlr-randr --output HDMI-A-1 --transform 90";
@@ -70,7 +74,6 @@
           export ZSH="${config.programs.zsh.oh-my-zsh.package}/share/oh-my-zsh"
         '')
         (lib.mkOrder 1000 ''
-          ${lib.optionalString config.custom.zsh.fastfetch "fastfetch"}
           # Auto-rotate screen to portrait when running inside cage/foot
           # on the writer-deck. Skipped over SSH and other non-Wayland sessions.
           if [ -n "$WAYLAND_DISPLAY" ] && [ -n "$CAGE_RUNNING" ] && [ "$ROTATED" != "1" ]; then
@@ -78,6 +81,16 @@
             wlr-randr --output HDMI-A-1 --transform 90 >/dev/null 2>&1
           fi
         '')
+        ''
+          if command -v wt >/dev/null 2>&1; then
+            eval "$(command wt config shell init zsh)"
+          fi
+        ''
+        ''
+          if command -v herdr >/dev/null 2>&1; then
+            eval "$(command herdr completions zsh)"
+          fi
+        ''
       ];
     };
   };

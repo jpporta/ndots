@@ -32,7 +32,6 @@
     ../../modules/home-manager/pi
     ../../modules/home-manager/tmux
     ../../modules/home-manager/openspec
-    ../../modules/home-manager/dev-orchestrator
     ../../modules/home-manager/power-profiles
     ../../modules/home-manager/ntfy-notify
     ../../modules/home-manager/pinentry
@@ -54,6 +53,9 @@
     ];
     sessionVariables = {
       EDITOR = "nvim";
+      NIX_BUILD_SHELL = "zsh";
+      BROWSER = "zen-browser";
+      GPG_TTY = "${pkgs.util-linux}/bin/tty";
     };
   };
 
@@ -98,7 +100,6 @@
       enable = true;
     };
     openspec.enable = true;
-    dev-orchestrator.enable = true;
     power-profiles.enable = true;
     ntfy-notify = {
       enable = true;
@@ -140,6 +141,7 @@
       koreader
       xorg.xauth
       easyeffects
+      diffnav
     ];
 
   programs = {

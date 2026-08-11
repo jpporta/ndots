@@ -128,6 +128,10 @@ return {
 				name = "hermes",
 				path = "/mnt/obsidian",
 			},
+			{
+				name = "reflections",
+				path = "/mnt/documents/reflections",
+			},
 		},
 		daily_notes = {
 			folder = "Journal",

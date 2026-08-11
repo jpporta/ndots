@@ -146,6 +146,10 @@
     nix-ld.enable = true;
   };
 
+  environment.variables = {
+    NIX_BUILD_SHELL = "zsh";
+  };
+
   # System Packages
   environment.systemPackages = with pkgs; [
     vim

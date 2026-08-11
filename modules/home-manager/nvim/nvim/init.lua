@@ -18,6 +18,14 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.language = "en_US"
 
 require("lazy").setup("plugins")
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function(args)
+		vim.bo[args.buf].syntax = "markdown"
+	end,
+})
+
 require("jpporta.autocommands")
 require("jpporta.remaps")
 require("jpporta.sets")
