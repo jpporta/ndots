@@ -91,6 +91,16 @@
             eval "$(command herdr completions zsh)"
           fi
         ''
+        # Open command in editor
+        ''
+          autoload -Uz edit-command-line
+          zle -N edit-command-line
+          bindkey '^X^E' edit-command-line
+        ''
+        # Magic Space
+        ''
+          bindkey ' ' magic-space
+        ''
       ];
     };
   };
