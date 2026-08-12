@@ -1,0 +1,21 @@
+# Developer iteration 1 — install-wezterm-mdcat
+
+## Result
+Implemented the approved WezTerm/mdcat Home Manager change for `jpporta-nixos` without widening configuration scope.
+
+## Changed files
+- `modules/home-manager/wezterm/default.nix` (new): added opt-in `custom.wezterm.enable`; enables Home Manager `programs.wezterm`; mirrors Alacritty presentation with BerkeleyMono Nerd Font Mono at 11pt, no decorations, 0.8 opacity, and 10x16 window padding; installs `pkgs.mdcat`.
+- `hosts/jpporta-nixos/home.nix`: imports and enables the WezTerm module while retaining enabled Alacritty fallback.
+- `modules/home-manager/hyprland/default.nix`: changed the terminal launcher used by `SUPER+Return` from `alacritty` to `wezterm`.
+- `icm/changes/2026-08-12-install-wezterm-mdcat/02_implement/output/implementation.md`: recorded implementation details, validation, deviations, and residual risks.
+- This required iteration log.
+
+## Validation commands
+1. `nix flake check` — passed. Existing xorg deprecation warning; incompatible `aarch64-linux` omitted by default.
+2. `nix build .#nixosConfigurations.jpporta-nixos.config.system.build.toplevel --no-link` — passed. Build generated `hm_weztermwezterm.lua`, included mdcat 2.7.1, and completed the host system derivation without a result symlink.
+3. `git diff --check` — passed.
+
+An initial `nix flake check` before staging the new module failed because Nix's flake source view excludes untracked paths; the module was then staged locally solely to make it visible to Nix evaluation. No commit or deployment was performed.
+
+## Deviations and risks
+No deviations from the approved plan. Interactive rendering and mdcat image support remain untested; Alacritty remains configured as fallback. Repository pre-existing untracked `.pi-subagents/` and change-record files remain outside the approved configuration edits. The implementation module itself is staged (`git add`) to permit Nix's Git-tree evaluation; no files were committed.
