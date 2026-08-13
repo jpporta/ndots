@@ -185,6 +185,10 @@ in
             hl.bind(mod .. " + Space", hl.dsp.exec_cmd(p.menu))
             hl.bind("CTRL + ALT + DELETE", hl.dsp.exec_cmd(p.logout_menu))
 
+            -- ---------- Bitwarden ----------
+            hl.bind(mod_alt .. " + P", hl.dsp.exec_cmd("kitty --class=bitwarden-bwp --hold=no bwp"))
+            hl.bind(mod_alt .. " + C", hl.dsp.exec_cmd("kitty --class=bitwarden-bwp --hold=no bwc"))
+
             -- ---------- Focus movement (vim) ----------
             hl.bind(mod .. " + H", hl.dsp.focus({ direction = "left" }))
             hl.bind(mod .. " + L", hl.dsp.focus({ direction = "right" }))
@@ -319,6 +323,26 @@ in
                     float = true,
                     center = true,
                     stay_focused = true,
+            })
+
+            -- Bitwarden floating search windows
+            hl.window_rule({
+                    name = "Bitwarden Password Search",
+                    match = { class = "bitwarden-bwp" },
+                    float = true,
+                    center = true,
+                    stay_focused = true,
+                    size = "(monitor_w/2) (monitor_h/3)",
+                    move = "(monitor_w/4) (monitor_h/3)",
+            })
+            hl.window_rule({
+                    name = "Bitwarden Code Search",
+                    match = { class = "bitwarden-bwc" },
+                    float = true,
+                    center = true,
+                    stay_focused = true,
+                    size = "(monitor_w/2) (monitor_h/3)",
+                    move = "(monitor_w/4) (monitor_h/3)",
             })
 
             -- Picture-in-Picture: pinned floating mini-player in bottom-right quadrant.

@@ -30,7 +30,7 @@ let
       esac
 
       printf '%s' "$val" | wl-copy
-      notify-send -t 1200 "bw: copied $cmd"
+      exit 0
     '';
   };
 in

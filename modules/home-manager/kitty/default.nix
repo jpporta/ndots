@@ -69,6 +69,8 @@ in
         background_opacity = 0.8;
         hide_window_decorations = true;
         window_padding_width = "10 10 16 16";
+        confirm_os_window_close = 0;
+        close_on_child_death = true;
         tab_bar_style = "hidden";
       };
     };
