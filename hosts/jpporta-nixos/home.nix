@@ -14,7 +14,7 @@
     ../../modules/home-manager/oh-my-posh
     ../../modules/home-manager/zshrc
     ../../modules/home-manager/alacritty
-    ../../modules/home-manager/wezterm
+    ../../modules/home-manager/kitty
     ../../modules/home-manager/bat
     ../../modules/home-manager/fastfetch
     ../../modules/home-manager/hyprland
@@ -66,7 +66,7 @@
     oh-my-posh.enable = true;
     zsh.enable = true;
     alacritty.enable = true;
-    wezterm.enable = true;
+    kitty.enable = true;
     bat.enable = true;
     fastfetch.enable = true;
     opencode.enable = true;

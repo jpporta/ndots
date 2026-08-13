@@ -1,0 +1,19 @@
+Implemented the approved WezTerm-to-Kitty replacement.
+
+Changed only approved configuration paths plus the required implementation record:
+- Added modules/home-manager/kitty/default.nix with Kitty settings and retained Tiki v0.6.1/Mermaid CLI.
+- Removed modules/home-manager/wezterm/default.nix.
+- Updated hosts/jpporta-nixos/home.nix to import/enable Kitty.
+- Updated Hyprland launcher to kitty.
+- Wrote 02_implement/output/implementation.md.
+
+Validation:
+- nix flake check: passed, all checks passed.
+- nixos-rebuild dry-build --flake ~/ndots#jpporta-nixos: passed; planned Kitty 0.47.0, generated Kitty config, Home Manager generation, and host system derivations. Only evaluation warnings about deprecated xorg.xauth and renamed system were emitted.
+- Confirmed no wezterm/custom.wezterm/programs.wezterm references remain in hosts/jpporta-nixos or modules/home-manager.
+- Confirmed generated Kitty config contains palette, font_family BerkeleyMono Nerd Font Mono, font_size 11, disable_ligatures always, background_opacity 0.8, hidden decorations, padding 10 10 16 16, and hidden tab bar.
+- Kitty package documentation confirms native Unicode placeholder support (graphics protocol) and Kitty 0.47.0 was selected by dry-build.
+
+Decision/deviation: Supervisor directed creating modules/home-manager/kitty/default.nix and removing old WezTerm module, since plan simultaneously named old path and required Kitty import. No deployment was run.
+
+Working tree has unrelated pre-existing staged changes; no files were staged by this worker beyond intent-to-add for the new Kitty file, which was necessary for Nix flake visibility during validation.

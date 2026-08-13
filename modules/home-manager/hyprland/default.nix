@@ -159,7 +159,7 @@ in
 
             -- Programs ----------------------------------------
             local p = {
-              terminal = "wezterm",
+              terminal = "kitty",
             	file_manager = "thunar",
             	menu = "pkill rofi || " .. home .. "/.config/rofi/launchers/type-7/launcher.sh",
             	logout_menu = "wlogout -b 5 -T 400 -B 400",
