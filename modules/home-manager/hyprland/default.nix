@@ -165,6 +165,7 @@ in
             	logout_menu = "wlogout -b 5 -T 400 -B 400",
             	toggle_notifications = "swaync-client -t -sw",
             	screen_ocr = home .. "/.local/bin/read-screen",
+            	scratchpad_terminal = "kitty --class=scratchpad-terminal",
             }
 
             -- Binds ----------------------------------------
@@ -175,6 +176,7 @@ in
 
             -- ---------- App launchers / global actions ----------
             hl.bind(mod .. " + Return", hl.dsp.exec_cmd(p.terminal))
+            hl.bind(mod .. " + code:61", hl.dsp.exec_cmd(p.scratchpad_terminal))
             hl.bind(mod .. " + Q", hl.dsp.window.close())
             hl.bind(mod_shft .. " + Q", hl.dsp.exec_cmd("killall zoom"))
             hl.bind(mod .. " + E", hl.dsp.exec_cmd(p.file_manager))
@@ -343,6 +345,15 @@ in
                     stay_focused = true,
                     size = "(monitor_w/2) (monitor_h/3)",
                     move = "(monitor_w/4) (monitor_h/3)",
+            })
+
+            -- Scratchpad terminal: centered floating 4:3 terminal
+            hl.window_rule({
+                    name = "Scratchpad Terminal",
+                    match = { class = "scratchpad-terminal" },
+                    float = true,
+                    center = true,
+                    size = "(monitor_w*0.4) (monitor_w*0.3)",
             })
 
             -- Picture-in-Picture: pinned floating mini-player in bottom-right quadrant.

@@ -1,0 +1,78 @@
+# Developer Log — scratchpad-terminal (Iteration 1)
+
+Date: 2026-08-13
+Status: implemented
+
+## Task
+Implement approved plan for scratchpad terminal feature in Hyprland.
+
+## Changes Made
+
+### File: modules/home-manager/hyprland/default.nix
+
+1. Added `scratchpad_terminal` to the programs table:
+   - Command: `kitty --class=scratchpad-terminal`
+
+2. Added keybinding for Super+/
+   - `hl.bind(mod .. " + code:84", hl.dsp.exec_cmd(p.scratchpad_terminal))`
+   - Uses Linux keycode 84 for the forward slash (/) key
+
+3. Added window rule for class `scratchpad-terminal`:
+   - `float = true` - window is floating
+   - `center = true` - window centered on active monitor
+   - `size = "(monitor_w*0.4) (monitor_w*0.3)"` - 4:3 aspect ratio
+
+## Validation
+
+| Command | Result |
+|---------|--------|
+| `nix flake check` | PASSED |
+| `nix build .#nixosConfigurations.jpporta-nixos.config.system.build.toplevel --dry-run` | PASSED (8 derivations queued) |
+
+## Diff Summary
+
+```diff
+diff --git a/modules/home-manager/hyprland/default.nix b/modules/home-manager/hyprland/default.nix
+--- a/modules/home-manager/hyprland/default.nix
++++ b/modules/home-manager/hyprland/default.nix
+@@ -165,6 +165,7 @@ in
+             	toggle_notifications = "swaync-client -t -sw",
+             	screen_ocr = home .. "/.local/bin/read-screen",
++            	scratchpad_terminal = "kitty --class=scratchpad-terminal",
+             }
+
+             -- Binds ----------------------------------------
+@@ -174,6 +175,7 @@ in
+             -- ---------- App launchers / global actions ----------
+             hl.bind(mod .. " + Return", hl.dsp.exec_cmd(p.terminal))
++            hl.bind(mod .. " + code:84", hl.dsp.exec_cmd(p.scratchpad_terminal))
+             hl.bind(mod .. " + Q", hl.dsp.window.close())
+
+             [...]
+
++            -- Scratchpad terminal: centered floating 4:3 terminal
++            hl.window_rule({
++                    name = "Scratchpad Terminal",
++                    match = { class = "scratchpad-terminal" },
++                    float = true,
++                    center = true,
++                    size = "(monitor_w*0.4) (monitor_w*0.3)",
++            })
+```
+
+## Deviations from Plan
+
+None.
+
+## Risks
+
+1. Keycode 84 for slash key - This is the standard Linux keycode for the forward slash key on US keyboards. If the user has a different keyboard layout, the keybinding may not work correctly.
+2. The window size formula `(monitor_w*0.4) (monitor_w*0.3)` produces a 4:3 ratio on the current 1920x1080 monitor (768x576), which is smaller than expected. A larger size like `(monitor_w*0.5) (monitor_w*0.375)` would be 960x720.
+
+## Output Files
+
+- `/home/jpporta/ndots/icm/changes/2026-08-13-scratchpad-terminal/02_implement/output/implementation.md`
+
+## Recommended Next Step
+
+Proceed to validation stage (03_validate) to verify the implementation before deployment.
