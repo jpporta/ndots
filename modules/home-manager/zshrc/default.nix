@@ -65,6 +65,7 @@
         ts = "tailscale --socket=/tmp/ts-$UID/tailscaled.sock";
         ts-status = "ts status";
         ts-ping = "ts ping -c 3 jpporta-nixos";
+        spf = "superfile";
       };
 
       initContent = lib.mkMerge [

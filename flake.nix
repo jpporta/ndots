@@ -6,17 +6,13 @@
     nixpkgs-unstable = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
-    nixpkgs-deck = {
-      url = "github:NixOS/nixpkgs/nixos-unstable";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-deck = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-deck";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     zen-browser = {
@@ -28,6 +24,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hermes-agent.url = "github:NousResearch/hermes-agent";
+    slk.url = "github:gammons/slk";
   };
 
   outputs =
@@ -59,7 +56,7 @@
       };
 
       homeConfigurations.jpporta-deck = inputs.home-manager-deck.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs-deck.legacyPackages.aarch64-linux;
+        pkgs = inputs.nixpkgs-unstable.legacyPackages.aarch64-linux;
         extraSpecialArgs = { inherit inputs; };
         modules = [
           ./hosts/writter-deck/home.nix

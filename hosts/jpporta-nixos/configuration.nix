@@ -196,6 +196,7 @@
       dataDir = "/home/jpporta";
       configDir = "/home/jpporta/.config/syncthing";
     };
+    gvfs.enable = true;
   };
 
   security.rtkit.enable = true; # lets pipewire get realtime priority
@@ -210,7 +211,7 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
   boot.kernelModules = [ "v4l2loopback" ];
   boot.extraModprobeConfig = ''
-    options v4l2loopback devices=1 video_nr=10 card_label="OBS Cam" exclusive_caps=1
+    options v4l2loopback devices=1 video_nr=10 card_label="OBS Cam" 
   '';
 
   programs.obs-studio = {

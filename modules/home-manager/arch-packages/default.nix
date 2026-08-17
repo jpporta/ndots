@@ -20,7 +20,6 @@
       stow
       fastfetch
       tldr
-      superfile
       silicon
       expect
       jq

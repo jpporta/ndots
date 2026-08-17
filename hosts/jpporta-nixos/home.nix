@@ -144,6 +144,14 @@
       xorg.xauth
       easyeffects
       diffnav
+      calibre
+      gnome.gvfs
+      sunshine
+      (inputs.slk.packages.${pkgs.system}.default.overrideAttrs (_: {
+        doCheck = false;
+      }))
+    ] ++ [
+      inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.superfile
     ];
 
   programs = {
