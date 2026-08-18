@@ -10,7 +10,11 @@
   };
 
   config = lib.mkIf config.custom.steam.enable {
-    programs.steam.enable = true;
+    programs.steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+    };
     programs.gamemode.enable = true;
   };
 
