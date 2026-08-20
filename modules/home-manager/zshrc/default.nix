@@ -66,6 +66,7 @@
         ts-status = "ts status";
         ts-ping = "ts ping -c 3 jpporta-nixos";
         spf = "superfile";
+        granola = "nix run /mnt/work/nix-shells/granola";
       };
 
       initContent = lib.mkMerge [
@@ -90,6 +91,36 @@
         ''
           if command -v herdr >/dev/null 2>&1; then
             eval "$(command herdr completions zsh)"
+          fi
+        ''
+        ''
+          # Inside Herdr panes, restore Wayland environment variables and Kitty graphics capability
+          if [ -n "$HERDR_ENV" ]; then
+            export KITTY_WINDOW_ID=1
+
+            # Restore WAYLAND_DISPLAY and DISPLAY if missing in pane environment
+            if [ -z "$WAYLAND_DISPLAY" ] && [ -n "$XDG_RUNTIME_DIR" ]; then
+              for sock in "$XDG_RUNTIME_DIR"/wayland-<->(N); do
+                if [ -S "$sock" ]; then
+                  export WAYLAND_DISPLAY="$(basename "$sock")"
+                  break
+                fi
+              done
+            fi
+
+            if [ -z "$DISPLAY" ] && [ -n "$WAYLAND_DISPLAY" ]; then
+              export DISPLAY=:0
+            fi
+
+            # Restore Hyprland instance signature if running under Hyprland
+            if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ] && [ -d "$XDG_RUNTIME_DIR/hypr" ]; then
+              for sig in "$XDG_RUNTIME_DIR/hypr"/*(N); do
+                if [ -d "$sig" ]; then
+                  export HYPRLAND_INSTANCE_SIGNATURE="$(basename "$sig")"
+                  break
+                fi
+              done
+            fi
           fi
         ''
         # Open command in editor

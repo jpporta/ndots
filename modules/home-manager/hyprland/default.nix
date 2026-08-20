@@ -366,6 +366,13 @@ in
             	move = "(3*monitor_w/4)-22 (monitor_h-window_h-22)",
             })
 
+            -- Steam: start in fullscreen mode
+            hl.window_rule({
+            	name = "Steam Fullscreen",
+            	match = { class = "^[sS]team$" },
+            	fullscreen = true,
+            })
+
             hl.env("QT_QPA_PLATFORMTHEME", "hyprqt6engine")
     '';
   };

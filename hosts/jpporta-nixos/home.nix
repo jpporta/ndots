@@ -55,7 +55,7 @@
     sessionVariables = {
       EDITOR = "nvim";
       NIX_BUILD_SHELL = "zsh";
-      BROWSER = "zen-browser";
+      BROWSER = "zen-beta";
       GPG_TTY = "${pkgs.util-linux}/bin/tty";
     };
   };
@@ -150,7 +150,8 @@
       (inputs.slk.packages.${pkgs.system}.default.overrideAttrs (_: {
         doCheck = false;
       }))
-    ] ++ [
+    ]
+    ++ [
       inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.superfile
     ];
 
@@ -194,4 +195,16 @@
   };
 
   custom.pinentry.enable = true;
+
+  xdg.desktopEntries.steam-pipewire = {
+    name = "Steam (Pipewire)";
+    exec = "steam -pipewire %U";
+    icon = "steam";
+    type = "Application";
+    categories = [ "Game" ];
+    mimeType = [
+      "x-scheme-handler/steam"
+      "x-scheme-handler/steamlink"
+    ];
+  };
 }
