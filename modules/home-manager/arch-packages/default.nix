@@ -101,6 +101,7 @@
       libsForQt5.qtstyleplugin-kvantum
 
       # ---- GUI apps ----
+      ryubing # Ryujinx switch emulator (community fork)
       obsidian
       obs-cmd
       qbittorrent

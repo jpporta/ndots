@@ -1,18 +1,18 @@
-function source_matugen()
-	local matugen_path = os.getenv("HOME") .. "/.config/nvim/lua/jpporta/themes/gruvbox-dark.lua"
- -- dofile doesn't expand $HOME or ~
-
-	dofile(matugen_path)
+function source_current()
+  -- Runtime theme fragment written by tooling/theme-switcher. Lives OUTSIDE this
+  -- symlinked config dir (~/.config/nvim is a symlink into the repo) so the
+  -- switcher and Home Manager never write the same path.
+  -- dofile doesn't expand $HOME or ~
+  local theme_path = os.getenv("HOME") .. "/.config/theme-switcher/nvim-current.lua"
+  dofile(theme_path)
 end
--- local function auxiliary_function()
--- 	source_matugen()
--- 	vim.cmd("TransparentEnable")
--- end
---
--- -- Register an autocmd to listen for matugen updates
--- vim.api.nvim_create_autocmd("Signal", {
--- 	pattern = "SIGUSR1",
--- 	callback = auxiliary_function,
--- })
 
-source_matugen()
+source_current()
+
+-- Re-enable live reload: theme-switcher sends SIGUSR1 to nvim processes on switch.
+vim.api.nvim_create_autocmd("Signal", {
+  pattern = "SIGUSR1",
+  callback = function()
+    source_current()
+  end,
+})

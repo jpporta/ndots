@@ -1,0 +1,54 @@
+# Developer log — theme-switcher, iteration 1 (implement)
+
+Date: 2026-08-24
+Stage: 02_implement
+
+## Summary
+
+Implemented the approved plan: a runtime-override theme switcher with 10 upstream
+base16-schemes theme YAMLs, per-theme wallpaper folders, and a bash switcher
+(`theme-switcher <slug>`) that writes kitty/nvim/waybar color fragments, atomic-swaps the
+`~/Wallpapers/current` symlink, triggers awww once, and reloads nvim + waybar — all live,
+no `nixos-rebuild`.
+
+## Files created
+- `themes/<slug>.yaml` ×10 (gruvbox-dark, ayu-dark, rose-pine, catppuccin-mocha,
+  tokyonight-storm, dracula, nord, monokai, snazzy, kanagawa) — base16 spec + nvim
+  `colorscheme`/`bg` extension keys; fetched from upstream @2b6f2d0677216d.
+- `themes/<slug>/wallpapers/` ×10 (empty, user-owned).
+- `tooling/theme-switcher/theme-switcher` (bash, executable).
+
+## Files modified
+- `modules/home-manager/kitty/default.nix` — inline gruvbox colors removed,
+  `include = "${config.home.homeDirectory}/.config/kitty/theme-current.conf"` added.
+- `modules/home-manager/nvim/nvim/lua/jpporta/theme.lua` — now sources the runtime
+  fragment `~/.config/theme-switcher/nvim-current.lua` and re-enables the SIGUSR1 reload
+  autocmd.
+
+## Validation
+- `bash -n` on the switcher: pass.
+- Sandboxed smoke test: `--list`, unknown-theme, illegal-slug, a real switch in a temp
+  HOME producing kitty(16 colors), nvim(bg+colorscheme), waybar(10 `@define-color`),
+  symlink flip, state write, idempotent re-switch, waybar `@import` rewrite — all pass.
+- Full loop over all 10 themes in sandbox: every theme parses and emits 16 kitty colors +
+  10 waybar defines.
+- `nix flake check`: all checks passed (exit 0); HM static config intact.
+- `git diff --check`: pass (no whitespace errors).
+
+## Deviations
+1. nvim runtime fragment at `~/.config/theme-switcher/nvim-current.lua` (not
+   `~/.config/nvim/theme-current.lua`) because `~/.config/nvim` is a full symlink into the
+   repo (module uses `mkOutOfStoreSymlink`) — writing there would touch the repo and break
+   the plan's own disjoint-files rule.
+2. Theme set finalized for upstream availability: `cobalt2` dropped (not in base16-schemes),
+   `kanagawa-wave` → `kanagawa`.
+3. hyprpaper module untouched — host already sets `hyprpaper.enable = false` (home.nix).
+4. waybar reload via `SIGHUP` (not user `launch.sh`); kitty relies on native auto-reload.
+   Both to be spot-checked at runtime in stage 3.
+
+## Residual risks
+- kitty/waybar reload semantics depend on the running binaries; confirmed in stage 3.
+- Theme wallpapers folders empty → awww skips (by design until user populates).
+- Per-theme nvim colorscheme must be installed on the host for `vim.cmd.colorscheme` to
+  succeed; missing ones silently fall back (default colorscheme) — an acceptable first-pass
+  caveat.

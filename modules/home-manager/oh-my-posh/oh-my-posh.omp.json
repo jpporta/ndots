@@ -72,11 +72,11 @@
       "newline": true,
       "segments": [
         {
-          "foreground": "#ffbb93",
+          "foreground": "__C_ACCENT__",
           "style": "plain",
           "template": " ",
           "type": "text",
-          "foreground_templates": ["{{ if gt .Code 0 }}#ffb8af{{ end }}"]
+          "foreground_templates": ["{{ if gt .Code 0 }}__C_ERR__{{ end }}"]
         }
       ],
       "type": "prompt"

@@ -39,6 +39,7 @@
     ../../modules/home-manager/swaync
     ../../modules/home-manager/bitwarden-cli
     ../../modules/home-manager/alarms-timers
+    ../../modules/home-manager/audio-rate
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -122,6 +123,7 @@
     };
     bitwarden.enable = true;
     alarms-timers.enable = true;
+    audio-rate.enable = true;
   };
   home.packages =
     let
@@ -147,6 +149,7 @@
       calibre
       gnome.gvfs
       sunshine
+      unrar
       (inputs.slk.packages.${pkgs.system}.default.overrideAttrs (_: {
         doCheck = false;
       }))

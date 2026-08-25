@@ -133,6 +133,15 @@
         ''
           bindkey ' ' magic-space
         ''
+        # Confirm  oh-my-posh colors live with the theme-switcher: if its runtime
+        # fragment exists, re-point oh-my-posh at it (zsh re-renders the prompt
+        # every line, so the switch is live with no shell restart). Runs after HM's
+        # own `oh-my-posh init zsh` line (order 1001).
+        (lib.mkOrder 1001 ''
+          if [ -f ~/.config/oh-my-posh/theme-current.json ]; then
+            eval "$(command oh-my-posh init zsh --config ~/.config/oh-my-posh/theme-current.json)"
+          fi
+        '')
       ];
     };
   };
