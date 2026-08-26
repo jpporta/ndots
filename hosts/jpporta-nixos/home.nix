@@ -40,6 +40,7 @@
     ../../modules/home-manager/bitwarden-cli
     ../../modules/home-manager/alarms-timers
     ../../modules/home-manager/audio-rate
+    ../../modules/home-manager/theme-picker
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -124,6 +125,7 @@
     bitwarden.enable = true;
     alarms-timers.enable = true;
     audio-rate.enable = true;
+    theme-picker.enable = true;
   };
   home.packages =
     let

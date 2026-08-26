@@ -166,6 +166,7 @@ in
             	toggle_notifications = "swaync-client -t -sw",
             	screen_ocr = home .. "/.local/bin/read-screen",
             	scratchpad_terminal = "kitty --class=scratchpad-terminal",
+                theme_picker = "qs -p ~/.config/quickshell/theme-picker",
             }
 
             -- Binds ----------------------------------------
@@ -190,6 +191,9 @@ in
             -- ---------- Bitwarden ----------
             hl.bind(mod_alt .. " + P", hl.dsp.exec_cmd("kitty --class=bitwarden-bwp --hold=no bwp"))
             hl.bind(mod_alt .. " + C", hl.dsp.exec_cmd("kitty --class=bitwarden-bwp --hold=no bwc"))
+
+            -- ---------- Theme picker ----------
+            hl.bind(mod_alt .. " + T", hl.dsp.exec_cmd(p.theme_picker))
 
             -- ---------- Focus movement (vim) ----------
             hl.bind(mod .. " + H", hl.dsp.focus({ direction = "left" }))
