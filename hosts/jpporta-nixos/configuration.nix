@@ -17,6 +17,7 @@
     ../../modules/nixos/tailscale
     ../../modules/nixos/wake-on-lan
     ../../modules/nixos/hermes
+    ../../modules/nixos/ollama
   ];
 
   # Bootloader
@@ -159,7 +160,6 @@
     htop
     wofi
     waybar
-    ollama-rocm
     glib
     gsettings-desktop-schemas
     zip
@@ -167,6 +167,8 @@
 
   virtualisation.docker.enable = true; # docker, buildx
   virtualisation.virtualbox.host.enable = true;
+
+  custom.ollama.enable = true;
 
   services = {
     resolved = {

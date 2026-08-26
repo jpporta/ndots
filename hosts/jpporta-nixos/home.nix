@@ -31,6 +31,7 @@
     ../../modules/home-manager/gif-recorder
     ../../modules/home-manager/nvim
     ../../modules/home-manager/pi
+    ../../modules/home-manager/little-coder
     ../../modules/home-manager/tmux
     ../../modules/home-manager/openspec
     ../../modules/home-manager/power-profiles
@@ -100,6 +101,7 @@
 
     nvim.enable = true;
     pi.enable = true;
+    little-coder.enable = true;
     tmux = {
       enable = true;
     };

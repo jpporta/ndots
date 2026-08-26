@@ -8,13 +8,13 @@
       "alignment": "left",
       "segments": [
         {
-          "foreground": "#ffbb93",
+          "foreground": "__C_ACCENT__",
           "style": "plain",
           "template": "{{ .UserName }}'s ",
           "type": "session"
         },
         {
-          "foreground": "#a75d31",
+          "foreground": "__C_PATH__",
           "options": {
             "style": "folder"
           },
@@ -23,7 +23,7 @@
           "type": "path"
         },
         {
-          "foreground": "#f3e1da",
+          "foreground": "__C_GIT__",
           "options": {
             "fetch_status": true
           },
@@ -32,7 +32,7 @@
           "type": "git"
         },
         {
-          "foreground": "#ecc3b0",
+          "foreground": "__C_NODE__",
           "options": {
             "fetch_version": true
           },
@@ -47,7 +47,7 @@
       "alignment": "right",
       "segments": [
         {
-          "foreground": "#d5d096",
+          "foreground": "__C_RAM__",
           "style": "diamond",
           "template": "RAM:{{ (div ((sub .PhysicalTotalMemory .PhysicalAvailableMemory)|float64) 1073741824.0) }}/{{ (div .PhysicalTotalMemory 1073741824.0) }}GB ",
           "trailing_diamond": " ",
