@@ -174,10 +174,6 @@
       set -g set-clipboard on
 
       run '~/.tmux/plugins/tpm/tpm'
-
-      # Theme colors: live base16 override written by the theme-switcher (no rebuild).
-      # Guarded so a fresh session before the first switch still loads cleanly.
-      if-shell -f ~/.config/tmux/theme-current.conf 'source-file ~/.config/tmux/theme-current.conf'
     ''
     + config.custom.tmux.extraConfig;
   };
