@@ -16,6 +16,7 @@
     ../../modules/home-manager/alacritty
     ../../modules/home-manager/kitty
     ../../modules/home-manager/bat
+    ../../modules/home-manager/lazygit
     ../../modules/home-manager/fastfetch
     ../../modules/home-manager/hyprland
     ../../modules/home-manager/hypridle
@@ -57,7 +58,6 @@
     ];
     sessionVariables = {
       EDITOR = "nvim";
-      NIX_BUILD_SHELL = "zsh";
       BROWSER = "zen-beta";
       GPG_TTY = "${pkgs.util-linux}/bin/tty";
     };
@@ -66,6 +66,7 @@
   custom = {
     jpporta-calendars.enable = true;
 
+    lazygit.enable = true;
     oh-my-posh.enable = true;
     zsh.enable = true;
     alacritty.enable = true;
@@ -143,6 +144,8 @@
 
       eza
       fastfetch
+      delta
+      tig
       nodejs
       firefox
       telegram-desktop
@@ -154,6 +157,7 @@
       gnome.gvfs
       sunshine
       unrar
+      xournalpp
       (inputs.slk.packages.${pkgs.system}.default.overrideAttrs (_: {
         doCheck = false;
       }))

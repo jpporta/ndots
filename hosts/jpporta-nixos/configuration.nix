@@ -18,6 +18,7 @@
     ../../modules/nixos/wake-on-lan
     ../../modules/nixos/hermes
     ../../modules/nixos/ollama
+    ../../modules/nixos/waydroid
   ];
 
   # Bootloader
@@ -135,6 +136,7 @@
     tailscale.enable = true;
     wake-on-lan.enable = true;
     hermes.enable = true;
+    waydroid.enable = true;
     keyd = {
       enable = false;
       internalIds = [ "1ea7:0907" ];
@@ -145,10 +147,6 @@
   programs = {
     zsh.enable = true;
     nix-ld.enable = true;
-  };
-
-  environment.variables = {
-    NIX_BUILD_SHELL = "zsh";
   };
 
   # System Packages

@@ -13,6 +13,7 @@ return {
 	config = function()
 		vim.g.neoformat_try_node_exe = 1
 		vim.g.neoformat_enabled_go = { "gofmt", "goimports" } -- tries gofmt first, then goimports
+		vim.g.neoformat_enabled_rust = { "rustfmt" } -- default, but explicit
 
 		-- Optional: Configure specific formatter options
 		-- For gofmt (usually no args needed)
