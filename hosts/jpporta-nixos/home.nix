@@ -28,6 +28,7 @@
     ../../modules/home-manager/wlogout
     ../../modules/home-manager/opencode
     ../../modules/home-manager/cedilla
+    ../../modules/home-manager/dict
     ../../modules/home-manager/dictation
     ../../modules/home-manager/gif-recorder
     ../../modules/home-manager/nvim
@@ -43,6 +44,7 @@
     ../../modules/home-manager/alarms-timers
     ../../modules/home-manager/audio-rate
     ../../modules/home-manager/theme-picker
+    ../../modules/home-manager/leaf
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -94,6 +96,7 @@
     darkman.enable = true;
 
     cedilla.enable = true;
+    dict.enable = true;
     dictation = {
       enable = true;
       modelHash = "sha256-ZNGCtEC5jVIDxPm9VBVE2ExgUZbE97hF36EfsjWU0eI=";
@@ -129,6 +132,7 @@
     alarms-timers.enable = true;
     audio-rate.enable = true;
     theme-picker.enable = true;
+    leaf.enable = true;
   };
   home.packages =
     let
@@ -148,22 +152,40 @@
       tig
       nodejs
       firefox
+      # fun
+      cbonsai
+      asciiquarium
+      pipes
+      asciinema
+
+      croc
+      ttyd
+      jrnl
+      newsboat
+      python314Packages.faker
+      grex
+
       telegram-desktop
       koreader
       xorg.xauth
       easyeffects
       diffnav
+      mitmproxy
       calibre
       gnome.gvfs
       sunshine
       unrar
-      xournalpp
+      claude-code
+      ghgrab
+      kew
+      aria2
       (inputs.slk.packages.${pkgs.system}.default.overrideAttrs (_: {
         doCheck = false;
       }))
     ]
     ++ [
       inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.superfile
+      inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.tuxedo
     ];
 
   programs = {

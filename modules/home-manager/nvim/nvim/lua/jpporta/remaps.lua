@@ -23,5 +23,4 @@ vim.keymap.set("n", "<leader>bo", "<cmd>%bd|e#<cr>", { desc = "Close all buffers
 
 vim.keymap.set("n", "<leader>tt", function()
 	vim.cmd("TransparentToggle")
-	source_matugen()
 end, { desc = "Toggle transparency" })

@@ -6,6 +6,8 @@
   };
 
   config = lib.mkIf config.custom.pi.enable {
+    home.sessionVariables.PI_CACHE_RETENTION = "long";
+
     home.packages = [
       inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pi-coding-agent
     ] ++ (with pkgs; [
