@@ -258,6 +258,22 @@
     };
 
     gnome.gnome-keyring.enable = true;
+
+    clamav = {
+      daemon.enable = true; # clamd, the scanning daemon
+      updater.enable = true; # freshclam, signature updates
+      clamonacc.enable = true;
+
+      scanner = {
+        enable = true; # periodic scheduled scans
+        interval = "*-*-* 04:00:00";
+        scanDirectories = [
+          "/home"
+          "/var/lib"
+          "/tmp"
+        ];
+      };
+    };
   };
   programs.mosh = {
     enable = true;

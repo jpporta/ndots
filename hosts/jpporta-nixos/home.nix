@@ -167,7 +167,7 @@
 
       telegram-desktop
       koreader
-      xorg.xauth
+      xauth
       easyeffects
       diffnav
       mitmproxy
@@ -179,6 +179,7 @@
       ghgrab
       kew
       aria2
+      kind
       (inputs.slk.packages.${pkgs.system}.default.overrideAttrs (_: {
         doCheck = false;
       }))
