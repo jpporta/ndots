@@ -220,7 +220,10 @@
   systemd.services.docker.environment.DOCKER_MIN_API_VERSION = "1.24";
 
   hardware.bluetooth.enable = true; # bluez
-  networking.firewall.enable = true; # replaces ufw
+  networking.firewall = {
+    enable = true; # replaces ufw
+    allowedUDPPorts = [ 4242 ];
+  };
   zramSwap.enable = true; # replaces zram-generator
 
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];

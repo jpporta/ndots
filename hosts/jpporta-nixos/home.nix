@@ -185,6 +185,7 @@
       }))
     ]
     ++ [
+      inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.lan-mouse
       inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.superfile
       inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.tuxedo
     ];
@@ -240,5 +241,22 @@
       "x-scheme-handler/steam"
       "x-scheme-handler/steamlink"
     ];
+  };
+
+  systemd.user.services.lan-mouse = {
+    Unit = {
+      Description = "Lan Mouse daemon";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.lan-mouse}/bin/lan-mouse daemon";
+      Restart = "on-failure";
+      RestartSec = 1;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
   };
 }

@@ -44,6 +44,7 @@ in
             		kb_layout = "us,us",
             		kb_variant = ",intl",
             		kb_options = "grp:alt_shift_toggle",
+                sensitivity = -0.5,
             	},
             	general = {
             		gaps_in = 7,
