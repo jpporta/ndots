@@ -3,7 +3,12 @@
 {
   home.packages =
     (with inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}; [
-      herdr
+      (herdr.overrideAttrs (old: {
+        env = (old.env or { }) // {
+          RUSTFLAGS =
+            (old.env.RUSTFLAGS or old.RUSTFLAGS or "") + " -C link-arg=-Wl,--no-eh-frame-hdr";
+        };
+      }))
     ])
     ++ (with pkgs; [
       # ---- shell & core CLI ----

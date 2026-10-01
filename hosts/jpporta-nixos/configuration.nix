@@ -167,6 +167,12 @@
   virtualisation.docker.enable = true; # docker, buildx
   virtualisation.virtualbox.host.enable = true;
 
+  # Prevent vboxnet0 from being stopped/restarted on switch, which breaks network-addresses-vboxnet0
+  systemd.services.vboxnet0 = {
+    stopIfChanged = false;
+    restartIfChanged = false;
+  };
+
   custom.ollama.enable = true;
 
   services = {
