@@ -290,6 +290,15 @@
     openFirewall = false;
   };
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [
+    (final: prev: {
+      unstable = import inputs.nixpkgs-unstable {
+        system = prev.stdenv.hostPlatform.system;
+        config.allowUnfree = true;
+      };
+    })
+  ];
+
   system.stateVersion = "26.05";
 
 }

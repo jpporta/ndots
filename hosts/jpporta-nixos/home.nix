@@ -175,7 +175,6 @@
       gnome.gvfs
       sunshine
       unrar
-      claude-code
       ghgrab
       kew
       aria2
@@ -185,9 +184,11 @@
       }))
     ]
     ++ [
-      inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.lan-mouse
-      inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.superfile
-      inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.tuxedo
+      pkgs.unstable.lan-mouse
+      pkgs.unstable.superfile
+      pkgs.unstable.tuxedo
+      pkgs.unstable.claude-code
+      pkgs.unstable.antigravity-cli
     ];
 
   programs = {
@@ -251,7 +252,9 @@
     };
     Service = {
       Type = "simple";
-      ExecStart = "${inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.lan-mouse}/bin/lan-mouse daemon";
+      ExecStart = "${
+        inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.lan-mouse
+      }/bin/lan-mouse daemon";
       Restart = "on-failure";
       RestartSec = 1;
     };
