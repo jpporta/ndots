@@ -43,8 +43,10 @@
     ../../modules/home-manager/bitwarden-cli
     ../../modules/home-manager/alarms-timers
     ../../modules/home-manager/audio-rate
+    ../../modules/home-manager/audio-split
     ../../modules/home-manager/theme-picker
     ../../modules/home-manager/leaf
+    ../../modules/home-manager/gaming
 
     inputs.zen-browser.homeModules.beta
   ];
@@ -131,8 +133,10 @@
     bitwarden.enable = true;
     alarms-timers.enable = true;
     audio-rate.enable = true;
+    audio-split.enable = true;
     theme-picker.enable = true;
     leaf.enable = true;
+    gaming_hm.enable = true;
   };
   home.packages =
     let
@@ -179,6 +183,7 @@
       kew
       aria2
       kind
+      ranger
       (inputs.slk.packages.${pkgs.system}.default.overrideAttrs (_: {
         doCheck = false;
       }))

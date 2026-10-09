@@ -19,6 +19,7 @@
     ../../modules/nixos/hermes
     ../../modules/nixos/ollama
     ../../modules/nixos/waydroid
+    ../../modules/nixos/gaming
   ];
 
   # Bootloader
@@ -142,6 +143,7 @@
       enable = false;
       internalIds = [ "1ea7:0907" ];
     };
+    gaming.enable = true;
   };
 
   ##------------------------------
