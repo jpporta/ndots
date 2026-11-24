@@ -24,6 +24,12 @@
     ../../modules/darwin/base
   ];
 
+  # Personal-only apps on top of modules/darwin/base/homebrew.nix.
+  homebrew.casks = [
+    "steam"
+    "qbittorrent"
+  ];
+
   networking.hostName = "jpporta-mac";
   networking.computerName = "jpporta-mac";
 
