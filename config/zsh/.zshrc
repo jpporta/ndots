@@ -192,5 +192,5 @@ if [[ -o interactive ]] && command -v fastfetch >/dev/null 2>&1; then
   fastfetch
 fi
 
-# UtilityOS: use libkrun for podman machines
+# Use libkrun (krunkit) for podman machines
 export CONTAINERS_MACHINE_PROVIDER="libkrun"
