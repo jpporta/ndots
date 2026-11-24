@@ -27,10 +27,6 @@
         name = "nikitabobko/tap"; # AeroSpace window manager
         trusted = true;
       }
-      {
-        name = "kadenbarlow/tap"; # giraffe GraphQL client
-        trusted = true;
-      }
     ];
 
     brews = [
@@ -52,7 +48,6 @@
       "eslint_d" # eslint daemon for fast editor linting
       "prettierd" # prettier daemon for fast editor formatting
       "resterm" # TUI client for .http/.rest files (HTTP, GraphQL, gRPC)
-      "giraffe" # terminal GraphQL client (kadenbarlow/tap)
 
       # ---- Cloud & containers ----
       "awscli" # AWS command-line interface
@@ -67,6 +62,11 @@
       # ---- Terminal & browser ----
       "kitty" # GPU terminal emulator (config/kitty)
       "zen" # Firefox-based browser
+
+      # ---- Utilities ----
+      "handy" # speech-to-text
+      "betterdisplay" # display scaling / management
+      "notion" # notes and docs
 
       # ---- AI ----
       "claude" # Claude desktop app

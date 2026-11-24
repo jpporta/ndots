@@ -12,3 +12,6 @@
 /config/herdr/.config/herdr/release-notes.json
 # Stray stow artifacts if stow is ever run with the repo as target
 /.config/
+# Karabiner-Elements writes these next to karabiner.json
+/config/karabiner/.config/karabiner/automatic_backups/
+/config/karabiner/.config/karabiner/assets/

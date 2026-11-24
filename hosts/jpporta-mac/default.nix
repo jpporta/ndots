@@ -11,7 +11,12 @@
 #   3. git clone https://github.com/jpporta/ndots ~/ndots
 #   4. sudo nix run nix-darwin -- switch --flake ~/ndots#jpporta-mac
 #   5. setup-keys        # generates SSH + GPG keys (prompts for passphrases)
-#   6. cd ~/ndots/config && stow -t ~ zsh git nvim kitty aerospace lazygit ...
+#   6. cd ~/ndots/config && stow -t ~ zsh git nvim kitty aerospace lazygit \
+#        oh-my-posh karabiner ...
+#      (karabiner must not pre-exist in ~/.config so stow links the whole dir;
+#       Karabiner rewrites karabiner.json atomically and would break a file link)
+#   7. Open Karabiner-Elements once and grant Input Monitoring / Login Items
+#      so karabiner_grabber starts (caps lock = esc on tap, ctrl on hold).
 {
   imports = [
     ../../modules/darwin/base

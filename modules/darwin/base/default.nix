@@ -23,6 +23,7 @@ in
   imports = [
     ./packages.nix
     ./homebrew.nix
+    ./defaults.nix
     ../keys
   ];
 
