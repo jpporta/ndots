@@ -6,7 +6,7 @@
 #
 # Inventory taken from `brew leaves` / `brew list --cask` on velozient-mac.
 # Also installed via brew there, but intentionally NOT declared because nix
-# already provides them (./packages.nix): neovim, stow, uv, podman,
+# already provides them (./packages.nix): neovim, stow, uv,
 # docker-compose, mkcert, pi-coding-agent, slack.
 {
   homebrew = {
@@ -20,10 +20,6 @@
 
     # Homebrew requires explicit trust before installing from third-party taps.
     taps = [
-      {
-        name = "slp/krun"; # krunkit (libkrun VM launcher for podman machines)
-        trusted = true;
-      }
       {
         name = "nikitabobko/tap"; # AeroSpace window manager
         trusted = true;
@@ -52,7 +48,10 @@
 
       # ---- Cloud & containers ----
       "awscli" # AWS command-line interface
-      "slp/krun/krunkit" # starts libkrun/HVF VMs; podman machine provider (CONTAINERS_MACHINE_PROVIDER=libkrun)
+      # podman comes from Homebrew, not nix: nixpkgs' podman only searches its own
+      # libexec for machine helpers, so it can't find krunkit/vfkit on macOS.
+      "podman" # daemonless container runtime; machines run on libkrun (CONTAINERS_MACHINE_PROVIDER)
+      "krunkit" # libkrun/HVF VM launcher for podman machines (homebrew/core, not the slp/krun tap)
     ];
 
     casks = [

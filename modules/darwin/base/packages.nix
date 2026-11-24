@@ -74,7 +74,6 @@
       rbw # Bitwarden CLI
 
       # Containers & local dev stack
-      podman # daemonless container runtime (uses libkrun via krunkit)
       docker-compose # compose engine used by `podman compose`
       mkcert # local CA + locally trusted TLS certs for dev domains
       uv # fast Python package/project manager
