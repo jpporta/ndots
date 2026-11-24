@@ -4,7 +4,12 @@ function source_current()
   -- switcher and Home Manager never write the same path.
   -- dofile doesn't expand $HOME or ~
   local theme_path = os.getenv("HOME") .. "/.config/theme-switcher/nvim-current.lua"
-  dofile(theme_path)
+  if vim.uv.fs_stat(theme_path) then
+    dofile(theme_path)
+  else
+    -- No switcher on this host (yet): fall back to the bundled default.
+    dofile(vim.fn.stdpath("config") .. "/lua/jpporta/themes/gruvbox-dark.lua")
+  end
 end
 
 source_current()
