@@ -15,3 +15,5 @@
 # Karabiner-Elements writes these next to karabiner.json
 /config/karabiner/.config/karabiner/automatic_backups/
 /config/karabiner/.config/karabiner/assets/
+# Generated per host by nix-darwin (modules/darwin/keys)
+/config/git/.config/git/host.gitconfig

@@ -12,7 +12,9 @@
 #   4. sudo nix run nix-darwin -- switch --flake ~/ndots#jpporta-mac
 #   5. setup-keys        # generates SSH + GPG keys (prompts for passphrases)
 #   6. cd ~/ndots/config && stow -t ~ zsh git nvim kitty aerospace lazygit \
-#        oh-my-posh karabiner ...
+#        oh-my-posh karabiner tmux bat direnv herdr tuicr
+#      Do NOT stow gnupg on Macs: nix-darwin writes ~/.gnupg/gpg-agent.conf
+#      (pinentry-mac) and ~/.config/git/host.gitconfig (email + signing key).
 #      (karabiner must not pre-exist in ~/.config so stow links the whole dir;
 #       Karabiner rewrites karabiner.json atomically and would break a file link)
 #   7. Open Karabiner-Elements once and grant Input Monitoring / Login Items
