@@ -10,6 +10,8 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./packages.nix
+    ./services.nix
     ../../modules/nixos/hyprland
     ../../modules/nixos/steam
     ../../modules/nixos/awsvpn
@@ -147,21 +149,17 @@
   programs = {
     zsh.enable = true;
     nix-ld.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
   };
 
-  # System Packages
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    wget
-    curl
-    htop
-    wofi
-    waybar
-    glib
-    gsettings-desktop-schemas
-    zip
-  ];
+  environment.sessionVariables = {
+    EDITOR = "nvim";
+    BROWSER = "zen-beta";
+    PI_CACHE_RETENTION = "long";
+  };
 
   virtualisation.docker.enable = true; # docker, buildx
   virtualisation.virtualbox.host.enable = true;

@@ -1,0 +1,67 @@
+# AeroSpace configuration inspired by config/hyprland/.config/hypr/hyprland.lua.
+# Workspaces are AeroSpace virtual workspaces, not native macOS Spaces.
+
+config-version = 2
+start-at-login = true
+automatically-unhide-macos-hidden-apps = true
+persistent-workspaces = ['1', '2', '3', '4', '5']
+
+# Keep nested containers predictable while retaining adaptive orientation.
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# Match the Hyprland gaps and use AeroSpace's tree-based tiling.
+[gaps]
+inner.horizontal = 7
+inner.vertical = 7
+outer.left = 10
+outer.bottom = 10
+outer.top = 10
+outer.right = 10
+
+[mode.main.binding]
+# Directional focus (Hyprland SUPER + H/J/K/L; macOS Command + H/J/K/L).
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# Move the focused window in the tree.
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Hyprland workspace keys Y/U/I/O/P map to AeroSpace virtual workspaces 1-5.
+alt-y = 'workspace 1'
+alt-u = 'workspace 2'
+alt-i = 'workspace 3'
+alt-o = 'workspace 4'
+alt-p = 'workspace 5'
+alt-shift-y = 'move-node-to-workspace 1'
+alt-shift-u = 'move-node-to-workspace 2'
+alt-shift-i = 'move-node-to-workspace 3'
+alt-shift-o = 'move-node-to-workspace 4'
+alt-shift-p = 'move-node-to-workspace 5'
+
+# Closest equivalents for common Hyprland actions. Deliberately do not bind
+# Command+Q so macOS keeps its normal quit-application shortcut.
+alt-shift-v = 'layout floating tiling'
+alt-f = 'fullscreen'
+alt-ctrl-m = 'layout horizontal vertical'
+alt-ctrl-comma = 'resize smart -50'
+alt-ctrl-period = 'resize smart +50'
+alt-ctrl-tab = 'workspace-back-and-forth'
+
+# Resize mode for fine adjustments without crowding the main bindings.
+alt-ctrl-r = 'mode resize'
+
+[mode.resize.binding]
+h = 'resize width -50'
+l = 'resize width +50'
+k = 'resize height -50'
+j = 'resize height +50'
+esc = 'mode main'
+enter = 'mode main'

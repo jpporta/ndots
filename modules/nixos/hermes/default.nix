@@ -13,7 +13,7 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [
-      inputs.hermes-agent.packages.${pkgs.system}.default
+      inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
 }

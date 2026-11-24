@@ -1,0 +1,32 @@
+[
+  {
+    "label": "lock",
+    "action": "loginctl lock-session",
+    "text": "Lock [l]",
+    "keybind": "l"
+  },
+  {
+    "label": "logout",
+    "action": "loginctl terminate-user $USER",
+    "text": "Logout [e]",
+    "keybind": "e"
+  },
+  {
+    "label": "shutdown",
+    "action": "hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0'",
+    "text": "Shutdown [s]",
+    "keybind": "s"
+  },
+  {
+    "label": "suspend",
+    "action": "systemctl suspend",
+    "text": "Suspend [u]",
+    "keybind": "u"
+  },
+  {
+    "label": "reboot",
+    "action": "hyprshutdown -t 'Restarting...' --post-cmd 'reboot'",
+    "text": "Reboot [r]",
+    "keybind": "r"
+  }
+]

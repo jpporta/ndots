@@ -1,0 +1,128 @@
+[general]
+status_path = "~/.local/share/vdirsyncer/status"
+
+[pair calendar_avodah]
+a = "calendar_avodah_remote"
+b = "calendar_avodah_local"
+collections = null
+conflict_resolution = "a wins"
+metadata = ["color", "displayname"]
+
+[pair calendar_casa]
+a = "calendar_casa_remote"
+b = "calendar_casa_local"
+collections = null
+conflict_resolution = "a wins"
+metadata = ["color", "displayname"]
+
+[pair calendar_exercicio]
+a = "calendar_exercicio_remote"
+b = "calendar_exercicio_local"
+collections = null
+conflict_resolution = "a wins"
+metadata = ["color", "displayname"]
+
+[pair calendar_familia]
+a = "calendar_familia_remote"
+b = "calendar_familia_local"
+collections = null
+conflict_resolution = "a wins"
+metadata = ["color", "displayname"]
+
+[pair calendar_inbox]
+a = "calendar_inbox_remote"
+b = "calendar_inbox_local"
+collections = null
+conflict_resolution = "a wins"
+metadata = ["color", "displayname"]
+
+[pair calendar_saude]
+a = "calendar_saude_remote"
+b = "calendar_saude_local"
+collections = null
+conflict_resolution = "a wins"
+metadata = ["color", "displayname"]
+
+[pair calendar_teleo]
+a = "calendar_teleo_remote"
+b = "calendar_teleo_local"
+collections = null
+conflict_resolution = "a wins"
+metadata = ["color", "displayname"]
+
+[storage calendar_avodah_local]
+type = "filesystem"
+fileext = ".ics"
+path = "~/.calendars/avodah"
+
+[storage calendar_casa_local]
+type = "filesystem"
+fileext = ".ics"
+path = "~/.calendars/casa"
+
+[storage calendar_exercicio_local]
+type = "filesystem"
+fileext = ".ics"
+path = "~/.calendars/exercicio"
+
+[storage calendar_familia_local]
+type = "filesystem"
+fileext = ".ics"
+path = "~/.calendars/familia"
+
+[storage calendar_inbox_local]
+type = "filesystem"
+fileext = ".ics"
+path = "~/.calendars/inbox"
+
+[storage calendar_saude_local]
+type = "filesystem"
+fileext = ".ics"
+path = "~/.calendars/saude"
+
+[storage calendar_teleo_local]
+type = "filesystem"
+fileext = ".ics"
+path = "~/.calendars/teleo"
+
+[storage calendar_avodah_remote]
+type = "caldav"
+url = "https://cal.joaoporta.com/jpporta/f3901be0-8dca-7856-d1cb-fe7869e92c1e/"
+username = "jpporta"
+password.fetch = ["command", "pass", "show", "personal/caldav"]
+
+[storage calendar_casa_remote]
+type = "caldav"
+url = "https://cal.joaoporta.com/jpporta/4f26caba-3134-4253-cdb6-16d34df2a109/"
+username = "jpporta"
+password.fetch = ["command", "pass", "show", "personal/caldav"]
+
+[storage calendar_exercicio_remote]
+type = "caldav"
+url = "https://cal.joaoporta.com/jpporta/773de611-4f21-053f-e916-f48f1b3f0e24/"
+username = "jpporta"
+password.fetch = ["command", "pass", "show", "personal/caldav"]
+
+[storage calendar_familia_remote]
+type = "caldav"
+url = "https://cal.joaoporta.com/jpporta/4fb446ab-33a1-1a91-c009-5b69316c8cea/"
+username = "jpporta"
+password.fetch = ["command", "pass", "show", "personal/caldav"]
+
+[storage calendar_inbox_remote]
+type = "caldav"
+url = "https://cal.joaoporta.com/jpporta/3a35411d-3b32-854e-9a57-1cca5510fd8e/"
+username = "jpporta"
+password.fetch = ["command", "pass", "show", "personal/caldav"]
+
+[storage calendar_saude_remote]
+type = "caldav"
+url = "https://cal.joaoporta.com/jpporta/4b455515-de59-2bdb-9e51-aee5a1a2d960/"
+username = "jpporta"
+password.fetch = ["command", "pass", "show", "personal/caldav"]
+
+[storage calendar_teleo_remote]
+type = "caldav"
+url = "https://cal.joaoporta.com/jpporta/dd52bfd0-c8c4-2d7b-6469-25244f69fe3a/"
+username = "jpporta"
+password.fetch = ["command", "pass", "show", "personal/caldav"]

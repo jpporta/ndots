@@ -1,0 +1,13 @@
+[user]
+	name = João Pedro Pin Porta
+	email = jpedro.porta@gmail.com
+	signingkey = 7BA72FF4FA933219
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
+
+[gpg]
+	program = gpg

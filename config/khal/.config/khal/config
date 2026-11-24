@@ -1,0 +1,52 @@
+[calendars]
+[[avodah]]
+path = ~/.calendars/avodah/
+color = 'light red'
+priority=10
+type=calendar
+
+[[casa]]
+path = ~/.calendars/casa/
+color = 'dark red'
+priority=10
+type=calendar
+
+[[exercicio]]
+path = ~/.calendars/exercicio/
+color = 'dark green'
+priority=10
+type=calendar
+
+[[familia]]
+path = ~/.calendars/familia/
+color = 'dark blue'
+priority=10
+type=calendar
+
+[[inbox]]
+path = ~/.calendars/inbox/
+color = 'light blue'
+priority=10
+type=calendar
+
+[[saude]]
+path = ~/.calendars/saude/
+color = 'light magenta'
+priority=10
+type=calendar
+
+[[teleo]]
+path = ~/.calendars/teleo/
+color = 'yellow'
+priority=10
+type=calendar
+
+[locale]
+dateformat=%Y-%m-%d
+datetimeformat=%Y-%m-%d %H:%M
+firstweekday=0
+longdateformat=%Y-%m-%d
+longdatetimeformat=%Y-%m-%d %H:%M
+timeformat=%H:%M
+unicode_symbols=true
+weeknumbers=off

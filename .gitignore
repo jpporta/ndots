@@ -1,3 +1,14 @@
 .worktrees/
 /.direnv
 /.pi-subagents/
+**/.DS_Store
+/config/herdr/.config/herdr/session-snapshots
+/config/herdr/.config/herdr/herdr-client.log
+/config/herdr/.config/herdr/herdr-server.log
+/config/herdr/.config/herdr/herdr.sock.agent
+/config/herdr/.config/herdr/session.json
+# Runtime state (contains recent repo paths / caches, not config)
+/config/lazygit/.config/lazygit/state.yml
+/config/herdr/.config/herdr/release-notes.json
+# Stray stow artifacts if stow is ever run with the repo as target
+/.config/

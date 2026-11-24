@@ -1,0 +1,8 @@
+git:
+  overrideGpg: true
+  diffRenderers:
+    - colorArg: always
+      command: delta -s --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+gui:
+  showRandomTip: false
+  sidePanelWidth: 0.2 # more room for the side-by-side view

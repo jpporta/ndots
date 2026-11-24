@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+  export HYPRLAND_INSTANCE_SIGNATURE="$(ls -t "$XDG_RUNTIME_DIR/hypr" 2>/dev/null | head -n1)"
+fi
+hyprctl hyprsunset temperature 4000
+hyprctl hyprsunset gamma 85

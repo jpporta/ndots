@@ -8,7 +8,7 @@
 
 let
   cfg = config.programs.awsVpnClient;
-  awsvpnclientPkg = inputs.awsvpnclient.defaultPackage.${pkgs.system};
+  awsvpnclientPkg = inputs.awsvpnclient.defaultPackage.${pkgs.stdenv.hostPlatform.system};
 in
 {
   options.programs.awsVpnClient = {

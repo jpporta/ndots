@@ -1,17 +1,13 @@
 {
-  description = "jpporta's NixOS and Home Manager configurations";
+  description = "jpporta's NixOS and nix-darwin configurations";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager-deck = {
-      url = "github:nix-community/home-manager";
+    darwin = {
+      url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -28,11 +24,18 @@
   };
 
   outputs =
-    inputs@{ self, nixpkgs, ... }:
+    inputs@{
+      self,
+      nixpkgs,
+      darwin,
+      ...
+    }:
     let
       systems = [
         "x86_64-linux"
         "aarch64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
     in
@@ -42,25 +45,31 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/jpporta-nixos/configuration.nix
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "bak";
-              extraSpecialArgs = { inherit inputs; };
-              users.jpporta = import ./hosts/jpporta-nixos/home.nix;
-            };
-          }
         ];
       };
 
-      homeConfigurations.jpporta-deck = inputs.home-manager-deck.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs-unstable.legacyPackages.aarch64-linux;
-        extraSpecialArgs = { inherit inputs; };
+      # Work Mac
+      darwinConfigurations.velozient-mac = inputs.darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/writter-deck/home.nix
+          ./hosts/velozient-mac/default.nix
         ];
+      };
+
+      # Personal Mac (engineering)
+      darwinConfigurations.jpporta-mac = inputs.darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/jpporta-mac/default.nix
+        ];
+      };
+
+      # `nix flake init -t ~/ndots#node` in a project, then `direnv allow`
+      templates.node = {
+        path = ./templates/node;
+        description = "Node.js dev shell (direnv + nix-direnv)";
       };
 
       devShells = forAllSystems (

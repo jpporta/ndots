@@ -1,0 +1,73 @@
+# tuicr — tuned to feel like my neovim (config/nvim).
+# Reference: https://github.com/agavra/tuicr/blob/main/docs/CONFIG.md
+# tuicr has no keymap table: keys are fixed, only the leader and the
+# behaviour switches below are configurable.
+
+# --- Keys ---------------------------------------------------------------
+leader = " "         # vim.g.mapleader = " "  -> <leader>e, <leader>p, ...
+q_quits = false      # quit like vim: :q, ZZ, ZQ
+comment_vim = true   # modal (normal/insert/visual) editing in the comment box
+comment_tab_width = 2 # vim.o.tabstop = 2
+editor = "nvim"      # `e` / :edit opens the file under the cursor
+
+# --- Theme --------------------------------------------------------------
+# Follows the system appearance, like darkman/theme-switcher do elsewhere.
+appearance = "system"
+theme_dark = "gruvbox-dark"
+theme_light = "gruvbox-light"
+transparent_background = true # transparent.nvim
+
+# --- Layout -------------------------------------------------------------
+file_list_position = "right" # :Neotree toggle right
+show_file_list = true
+compact_folders = true
+show_commits = true
+minimal_ui = false
+diff_view = "unified" # :diff toggles side-by-side
+
+# --- Editor feel --------------------------------------------------------
+relative_line_numbers = true # vim.opt.relativenumber
+cursor_line = true           # vim.o.cursorline
+scroll_offset = 8            # vim.opt.scrolloff = 8
+hunk_jump_align = "center"   # <C-d>zz / <C-u>zz habit: keep the target centred
+wrap = true                  # nvim wraps by default (j/k -> gj/gk)
+wrap_style = "gutter"        # vim.o.breakindent
+search_highlight = false     # vim.o.hlsearch = false
+word_diff = true
+mouse = true                 # vim.o.mouse = "a"
+mouse_scroll_lines = 3
+
+# --- Diff ---------------------------------------------------------------
+ignore_whitespace = false
+include_untracked = true
+diff_watch_interval_ms = 0 # off: errors on files that change mid-read; :e reloads
+
+# --- Review -------------------------------------------------------------
+username = "jpporta"
+show_reviewed = true
+show_pr_comments = true
+pr_comments_visibility = "unresolved"
+show_pr_checks = true
+no_update_check = true # installed through Homebrew
+
+# Tab / Shift-Tab cycles these in the comment box. The first is the default.
+comment_types = [
+  { id = "note", definition = "observation, no action needed", color = "blue" },
+  { id = "question", definition = "ask for clarification", color = "yellow" },
+  { id = "suggestion", definition = "possible improvement", color = "cyan" },
+  { id = "issue", definition = "problem to fix", color = "red" },
+  { id = "nit", label = "nitpick", definition = "small optional tweak", color = "magenta" },
+  { id = "praise", definition = "positive feedback", color = "green" },
+]
+
+[forge]
+comment_type_prefix = true
+comment_type_format = "**{label}:** " # Conventional Comments style on GitHub
+pr_search = "review-requested:@me draft:false"
+
+[export]
+code_context = true # include the commented diff lines when yanking a review
+
+[generated]
+collapse = true # lockfiles & co. stay folded; Space expands
+count = false

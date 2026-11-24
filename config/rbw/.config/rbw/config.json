@@ -1,0 +1,6 @@
+{
+  "base_url": "https://pass.joaoporta.com",
+  "email": "me@joaoporta.com",
+  "lock_timeout": 7200,
+  "pinentry": "pinentry-gnome3"
+}
