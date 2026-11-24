@@ -6,8 +6,16 @@ package.path = config_dir .. "/?.lua;" .. config_dir .. "/?/init.lua;" .. packag
 hl.monitor({
 	output = "DP-1",
 	mode = "1920x1080@239.96Hz",
-	position = "1080x0",
+	position = "auto",
 	scale = 1,
+})
+
+hl.monitor({
+	output = "HDMI-A-1",
+	mode = "1920x1080@239.96Hz",
+	position = "auto",
+	scale = 1,
+	mirror = "DP-1",
 })
 
 -- Looks ----------------------------------------
@@ -19,7 +27,6 @@ hl.config({
 		kb_layout = "us,us",
 		kb_variant = ",intl",
 		kb_options = "grp:alt_shift_toggle",
-    sensitivity = -0.5,
 	},
 	general = {
 		gaps_in = 7,

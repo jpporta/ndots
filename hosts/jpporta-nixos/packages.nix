@@ -880,11 +880,11 @@ in
       vdirsyncer
       ntfy-sh
       rbw
-      claude-code
       ghgrab
       kew
       aria2
       kind
+      ranger
       (inputs.slk.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (_: {
         doCheck = false;
       }))
@@ -893,8 +893,15 @@ in
       inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.lan-mouse
       inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.superfile
       inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.tuxedo
-      inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.herdr
+      (pkgs.unstable.herdr.overrideAttrs (old: {
+        env = (old.env or { }) // {
+          RUSTFLAGS =
+            (old.env.RUSTFLAGS or old.RUSTFLAGS or "") + " -C link-arg=-Wl,--no-eh-frame-hdr";
+        };
+      }))
       inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pi-coding-agent
+      pkgs.unstable.claude-code
+      pkgs.unstable.antigravity-cli
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.beta
     ];
 }
