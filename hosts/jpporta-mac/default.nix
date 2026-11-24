@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 # Personal Mac used for engineering. Same toolset as velozient-mac via
 # modules/darwin/base; only identity differs.
@@ -28,6 +28,16 @@
   homebrew.casks = [
     "steam"
     "qbittorrent"
+  ];
+
+  # Personal engineering tools (Go, DB migrations, cloud/k8s).
+  environment.systemPackages = with pkgs; [
+    golangci-lint
+    go-migrate
+    sqlc
+    flyctl
+    k9s
+    kubectl
   ];
 
   networking.hostName = "jpporta-mac";

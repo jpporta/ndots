@@ -42,6 +42,16 @@
       bat # cat with syntax highlighting
       oh-my-posh # prompt theme engine
       notion-app
+      fastfetch # system info on shell startup (config/zsh)
+      tmuxinator # tmux session layouts (`tx` alias)
+      bat-extras.batman # `man` via bat (`man` alias)
+      yazi # terminal file manager
+      coreutils-prefixed # GNU coreutils as g* (gdate, gls, ...); keeps BSD tools as-is
+
+      # Media
+      ffmpeg
+      yt-dlp
+      silicon # code screenshots (nvim-silicon)
 
       # Dev languages & tools
       go
@@ -52,6 +62,8 @@
       python3
       tree-sitter
       stylua # Lua formatter
+      cspell # spell checker for code (nvim)
+      git-lfs
       lua5_2
       luarocks
       pandoc # document converter

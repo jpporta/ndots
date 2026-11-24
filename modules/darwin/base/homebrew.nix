@@ -13,9 +13,10 @@
     enable = true;
     user = config.system.primaryUser;
 
-    # `onActivation.cleanup = "none"` leaves anything installed by hand alone.
-    # Switch to "uninstall" (or "zap") once this list is the source of truth.
-    onActivation.cleanup = "none";
+    # This list is the source of truth: on every switch, brew formulae and
+    # casks that are not declared here (or in the host file) are uninstalled.
+    # Install by hand only for quick experiments; declare anything you keep.
+    onActivation.cleanup = "uninstall";
 
     # Homebrew requires explicit trust before installing from third-party taps.
     taps = [
@@ -66,7 +67,6 @@
       # ---- Utilities ----
       "handy" # speech-to-text
       "betterdisplay" # display scaling / management
-      "notion" # notes and docs
 
       # ---- AI ----
       "claude" # Claude desktop app
