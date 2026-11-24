@@ -29,7 +29,7 @@ return {
 		end
 
 		require("nvim-silicon").setup({
-			font = "Berkeley Mono Nerd Font Mono=24",
+			font = "BerkeleyMono Nerd Font Mono=24",
 			theme = "gruvbox-dark",
 			background = "#bdae93",
 			pad_horiz = 100,
